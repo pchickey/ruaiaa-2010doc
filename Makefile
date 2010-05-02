@@ -1,9 +1,9 @@
 
 # quick-n-dirty latex makefile
 
-all: pdf
+all: factsheet
 
-pdf:
+factsheet:
 	latex factsheet.tex
 
 .PHONY : clean
