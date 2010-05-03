@@ -1,11 +1,13 @@
 \documentclass[10pt]{article}
 \usepackage[pdftex]{graphicx}
 \usepackage{multicol}
+\usepackage{float}
+\usepackage{caption}
 \hyphenation{op-tical net-works semi-conduc-tor auto-nomous magneto-meter}
 \setlength{\topmargin}{0in}
 \setlength{\headheight}{0in}
 \setlength{\headsep}{0in}
-\setlength{\textheight}{8in}
+\setlength{\textheight}{10in}
 \setlength{\textwidth}{6.5in}
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
@@ -24,21 +26,30 @@
 \\Electronics Design Team Leader: Pat Hickey
 \\Correspondence: pchickey@eden.rutgers.edu}\\
 \end{center}
+
+\begin{figure}[b]
+  \centering
+    \includegraphics[width=0.4\textwidth]{./images/daedalus.jpg}
+  \captionsetup{width=.70\textwidth}
+  \caption{The Daedalus. Maiden flight on 18 March 2010 available at http://bit.ly/RUdaedalus}
+\end{figure}
 \begin{multicols}{2}
 \section{Airframes}
 We have two similar airframes for crash redundancy. The flight electronics and payload are modular. We use the same equipment in each airframe.
 \subsection{Daedalus}
-Model: --unknown
+\emph{Maiden Flight 18 March 2010}
+\\Model: 10ft Custom Built Cessna
 \\Wingspan: 10ft
 \\Length: 6ft
 \\Gross Weight: 27lb
-\\Engine: 45cc --unknown manufacturer
+\\Engine: 45cc two-stroke gasoline
 \\Fuel: Gasoline with two stroke oil
 \\Fuel Capacity: 24oz
 \\Propeller: 22in (56cm) diameter
 \\Battery: 7.2v 2.4Ah Lithium Polymer
 \subsection{12ft Telemaster}
-Model: Aero Craft Ltd. 12ft Telemaster
+\emph{Under Construction}
+\\Model: Aero Craft Ltd. 12ft Telemaster
 \\Wingspan: 12ft
 \\Length: 7ft 6in
 \\Gross Weight: 27lb
@@ -78,6 +89,7 @@ RangeVideo TX-900 500mW Video Transmitter
 \\License: FCC Amateur Radio Technician
 
 \end{multicols}
+
 \end{document}
 
 
