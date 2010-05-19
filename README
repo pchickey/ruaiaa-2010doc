@@ -3,5 +3,9 @@ Documentation for 2010 UAS Competition
 Pat Hickey, May 2010
 ----
 
-LaTeX sources for our entry in the AUVSI UAS competition. 
+LaTeX sources for our entry in the AUVSI UAS competition.
+
+rutgers_auvsi_uas_2010_factsheet.pdf is the submitted version of our one page fact sheet. The sources can be found in factsheet/
+
+The sources for the technical report, still in progress, are found in paper/ 
 
