@@ -1,12 +1,17 @@
-\documentclass[12pt]{report}
+\documentclass[10pt]{report}
 \usepackage[pdftex]{graphicx}
-\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{ colorlinks=true
+           , linkcolor=cyan
+           , pdfnewwindow=true 
+           }
 \usepackage{amsmath}
 \usepackage{subfig}
 \usepackage{listings}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \hyphenation{auto-nomous}
 
+% Limited by competition rules to min font size 10 pt, max pages 20
 
 \begin{document}
 \title{Rutgers Autonomous Aircraft Team\\Technical Report\\2010 AUVSI UAS Competition}
@@ -34,12 +39,22 @@ Brief overview of what we accomplished.
 \subsubsection{Batteries}
 
 \section{Autopilot}
+Our entry uses an autopilot system based off the open source 
+Paparazzi project\cite{paparazziweb}. 
+We ported the airborne code to Linux in order to use a single computer for all of our flight hardware and software.
 
 \subsection{Requirments}
 
-\subsection{Hardware Design}
+We needed to interface with the following hardware components:
+\begin{itemize}
+	\item GPS
+	\item servos
+	\item etc.
+\end{itemize}
 
-\subsection{Software Design}
+\subsection{Hardware}
+
+\subsection{Software}
 
 \subsection{Ground Station}
 
@@ -58,5 +73,8 @@ Brief overview of what we accomplished.
 \subsection{Safety Features}
 
 \subsection{Procedures}
+
+\bibliographystyle{plain}
+\bibliography{paper}
 
 \end{document}
