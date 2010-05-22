@@ -54,9 +54,9 @@ WINLAB, a laboratory of the Rutgers University Department of Electrical Engineer
 BP Hobbies, 
 
 We would like to acknowledge
-(Adrien's Father), for his prolific networking and promoting of the team;
-Gregg (last name) of BP Hobbies for going out of his way to help us;
-David Devries and Michael Maia, for their technical guidance;
+(Adrien's Father), for his prolific networking and promotion of the team;
+Gregg (last name) of BP Hobbies for getting us out of numerous binds;
+Dave Devries and Michael Maia, of Invensense, for their technical guidance;
 Professor Chung-chieh Shan, for overseeing Pat's independent study on the IMU design;
 Ivan Seskar, for keeping us (and many other undergrads) in the black;
 Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor.
@@ -78,11 +78,10 @@ We made design decisions of which competition goals we will attempt.
 We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk, during development and competition, to our aircraft.
 
 One of the most difficult design decisions was to quantify ``ample payload.'' The payload size and weight is the major determining factor in the aircraft size.
-% -- expand this thought: 
+% -- expand this thought pch: 
 We started off assuming an electronics (computer + batteries) payload of 2.5lbs and a pan-tilt camera of 2.5lbs and 8 inch diameter.
 
 % Originally a large and heavy system was to be used for an imaging system, but as the year progress a lighter and smaller alternative was found, which helped the mechanical team in the placement of the imaging system(I do not know the details of what they did, that’s all Pat)
-
 
 Our team was divided by area of expertise into a mechanical team and an electrical team.
 The mechanical team began the year with the goal of producing two competition worthy airframes. These were to become the \emph{Daedalus} and \emph{Knight Two}.
@@ -95,14 +94,12 @@ We determined, after consulting with R/C experts, that a high wing trainer is th
 %Along with the actual construction of the planes, the mechanical team also focused on modifying the structures of the planes in order to fit the desired payload: the autopilot system and the imaging system.
 
 The electronics team was in charge of the autopilot system and the imaging system. 
-
-
-
+% not sure what i want to do to expand here pch
 
 \section{Flight Vehicle}
 
 At the time of this writing, we have completed and flown a single flight vehicle, which we have named the \emph{Daedalus}.
-We have also nearly completed a very similar backup airframe which serve as a backup in case the \emph{Daedalus} has a disaster. The \emph{Knight Two} will be fitted with 
+We have also nearly completed a very similar backup airframe which serve as a backup in case the \emph{Daedalus} has a disaster. The \emph{Knight Two} will be fitted with nearly identical R/C flight electronics, and accept the same autopilot and imaging system payload as the \emph{Daedalus}
 
 \subsection{Airframe}
 
@@ -134,7 +131,7 @@ We named it the \emph{Knight Two} after the Rutgers University mascot, the Scarl
 
 Since our testing plan for the \emph{Daedalus} was successful, we will follow the same plan when, in the coming weeks, we finish building \emph{Knight Two}.
 
-Figure goes here: Photos of Knight Two in construction, sandbag testing
+Figure goes here: Photos of Knight Two in construction
 
 Someone please detail the outer dimensions. The inner dimensions, space used for flight electronics, space used for payload underneath. Landing gear height. Number of servos and their locations
 
@@ -159,6 +156,8 @@ We ported the airborne code to Linux in order to use a single computer for all o
 
 We needed to interface with the following hardware components:
 \begin{itemize}
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
 	\item GPS
 	\item servos
 	\item camera
@@ -206,7 +205,7 @@ The entire imaging system is controlled by the ``Image Station Operator''.  They
   \centering
   	\includegraphics[width=0.9\textwidth]{../images/ImageStationControls.jpg}
   	\caption[Image Station Control Panel]{The Control Panel for the Image Station.  Above is a live video feed from the plane.  Below are controls to adjust the pan/tilt of the unit, zoom in/out, take a picture, and reset the camera to a neutral position.}
-  	\label{imagestationcontrols}
+  	\label{fig:imagestationcontrols}
 \end{figure}
 
 When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board), and then downloaded to the Image Station over the Xbee connection.
@@ -219,7 +218,7 @@ Once images are on the plane's computer they are ready to be downloaded over the
   \centering
   	\includegraphics[width=0.9\textwidth]{../images/ImageStationMain.jpg}
   	\caption[Image Station Interface]{The main interface for the Image Station.  All the images that have been taken are displayed on the top left.  The queue of images to download is on the bottom left.  On the right is the currently displayed image, with target information underneath.}
-  	\label{imagestationinterface}
+  	\label{fig:imagestationinterface}
 \end{figure}
 
 \subsection{Identifying target characteristics}
@@ -231,12 +230,14 @@ When an image has been fully downloaded to the ground targets can be identified 
 We consider the safety of our team, our aircraft, and our spectators to be of utmost importance.  As such, we've implemented numerous safety features and developed a strict procedure for starting, taxiing, and flying the plane.  This procedure enables us to ensure that all personnel are safely in place, and that no intergral checks are missed.
 
 \subsection{Safety Features}
-Our system is designed to gracefully handle any failure while continuing to ensure the safety of those nearby.
+Our system is designed to gracefully handle any failure while continuing to ensure the safety of those nearby. 
 \begin{itemize}
-\item Channel 5 (?) allows quick switch to safety pilot in case of autopilot malfunction
-\item autopilot return home command if connection is lost (I presume it does something like that?)
-\item kill switch
-\item etc?
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
+	\item Channel 5 (?) allows quick switch to safety pilot in case of autopilot malfunction
+	\item autopilot return home command if connection is lost (I presume it does something like that?)
+	\item kill switch
+	\item etc?
 \end{itemize}
 
 \subsection{Procedures}
