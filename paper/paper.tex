@@ -9,6 +9,7 @@
 \usepackage{subfig}
 \usepackage{listings}
 \usepackage{float}
+\usepackage{textcomp}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \hyphenation{auto-nomous}
 
@@ -196,6 +197,29 @@ MICHAEL : physical specification of camera (size, 5 megapixel stills). We select
 MICHAEL: camera interfaces: serial and USB 
 
 The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
+
+\subsection{Pan Tilt Unit}
+\begin{figure}
+	\centering
+	\subfloat[Front View]{\label{fig:camera_frontview} 
+			\includegraphics[width=0.3\textwidth]{../images/camera_frontview.jpg}}
+	\subfloat[Isometric View]{\label{fig:camera_isometric} 
+			\includegraphics[width=0.3\textwidth]{../images/camera_isometric.jpg}}
+	\caption{Sony MHS-PM5. Image Credit: Sony}
+	\label{fig:camera}
+\end{figure}
+
+\begin{figure}
+
+\end{figure}
+
+In order to meet the target imaging requirments, we needed to add both pan and tilt actuators to the camera. The XX by YY degree lens field of view is insufficient to see off flight path targets, and would limit our capability in the target search area phase. 
+We designed a pan tilt unit which make it possible to image the entire hemisphere below the fuselage of the aircraft.
+
+We took advantage of the MHS-PM5's swiveling lens assembley 
+(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens 135\textdegree back from straight forward, as shown in Figure \ref{}
+The camera and tilt servo assembley is attached to the aircraft on a rotating mount. 
+
 
 \subsection{Obtaining Images}
 
