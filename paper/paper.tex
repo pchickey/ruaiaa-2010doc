@@ -191,14 +191,6 @@ PAT
 To obtain images of targets in flight we have created an Imaging System capable of meeting all the requirements of the competition.  The system consists of a pan-tilt camera on the plane, communication software on the plane, and our ``Image Station'' application running on a dedicated laptop.  The Image Station communicates with the plane in real time via two different sets of wireless radios.  Using the Image Station, the operator can view a live video stream from the plane, control the pan-tilt camera remotely, and download and manipulate images.
 
 \subsection{Camera}
-
-MICHAEL : physical specification of camera (size, 5 megapixel stills). We selected it because...
-
-MICHAEL: camera interfaces: serial and USB 
-
-The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
-
-\subsection{Pan Tilt Unit}
 \begin{figure}
 	\centering
 	\subfloat[Front View]{\label{fig:camera_frontview} 
@@ -208,9 +200,32 @@ The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
 	\caption{Sony MHS-PM5. Image Credit: Sony}
 	\label{fig:camera}
 \end{figure}
+MICHAEL : physical specification of camera (size, 5 megapixel stills). We selected it because...
+
+MICHAEL: camera interfaces: serial and USB 
+
+The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
+
+\subsection{Pan Tilt Unit}
+
 
 \begin{figure}
-
+	\centering
+	\subfloat[Isometric View]{\label{fig:pantilt_isometric} 
+			\includegraphics[width=0.9\textwidth]{../images/pantilt_isometric.png}}
+\\
+	\subfloat[Side View]{\label{fig:pantilt_side} 
+			\includegraphics[width=0.9\textwidth]{../images/pantilt_side.png}}
+	\caption{Pan Tilt Unit}
+	\label{fig:pantilt}
+\end{figure}
+\begin{figure}
+	\subfloat[Linkage Detail View]{\label{fig:pantilt_linkdetail} 
+			\includegraphics[width=0.6\textwidth]{../images/pantilt_linkdetail.png}}
+	\subfloat[Linkage Velocity Plots]{\label{fig:pantilt_linkdetail} 
+			\includegraphics[width=0.4\textwidth]{../images/pantilt_linkplot.png}}
+	\caption{Tilt Linkage Detail}
+	\label{fig:pantilt_link}
 \end{figure}
 
 In order to meet the target imaging requirments, we needed to add both pan and tilt actuators to the camera. The XX by YY degree lens field of view is insufficient to see off flight path targets, and would limit our capability in the target search area phase. 
