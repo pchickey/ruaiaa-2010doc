@@ -9,7 +9,11 @@
 \usepackage{subfig}
 \usepackage{listings}
 \usepackage{float}
+<<<<<<< HEAD:paper/paper.tex
 \usepackage{textcomp}
+=======
+\usepackage{multicol}
+>>>>>>> 07eec77... fiddled with member list format:paper/paper.tex
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \hyphenation{auto-nomous}
 
@@ -32,11 +36,33 @@ In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year
 
 The team is made of 12 Rutgers undergraduates
 % List, can we do itemize for this? two columns? needs to be smaller
-Anthony Garrison, President
-Amanda Gaetano, Vice President
-Pat Hickey, Treasurer and Electronics Team Leader
-Greg Quinn, Mechanical Team Leader
-Stephen Indyk, Cogan Noll, John Palmer, Adrien Perkins, Michael Varga, Bradley Lord, David Wescott, and Taras Wallace.
+
+\begin{multicols}{2}
+\begin{itemize}
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
+%	\centering
+	\item Anthony Garrison, President
+	\item Amanda Gaetano, Vice President
+	\item Pat Hickey, Treasurer and Electronics Team Leader
+	\item Greg Quinn, Mechanical Team Leader
+%\end{itemize}
+%\begin{multicols}{2}
+%\begin{itemize}
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
+%	\centering
+	\item Stephen Indyk 
+	\item Cogan Noll
+	\item John Palmer 
+	\item Adrien Perkins
+	\item Michael Varga 
+	\item Bradley Lord
+	\item David Wescott
+	\item Taras Wallace
+\end{itemize}
+\end{multicols}
+
 
 We are advised by
  Professor Tobias Rossmann,
