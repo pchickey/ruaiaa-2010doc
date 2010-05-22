@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{subfig}
 \usepackage{listings}
+\usepackage{float}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \hyphenation{auto-nomous}
 
@@ -28,17 +29,9 @@ Brief overview of what we accomplished. This should be a very brief chronology o
 
 \section{Systems Engineering}
 
-The main systems engineering approach that was used in order to finish construction of the planes efficiently and in a timely manner was to break the team into two main groups: the mechanical team and the electronics team.  The mechanical team was in charge of the rebuild and build process of the \emph{Daedalus} and the \emph{Knight Two}, respectively.  In order to maximize efficiency we further divided the mechanical team into sub groups placing members where they were best suited.  During both constructions we split into a wing and tail section group and a fuselage group.  While all the construction was going on, two expert builders from the local R/C club would come and advise us when we were unsure how to proceed in order to have the best balance of weight and strength.  Along with the actual construction of the planes, the mechanical team also focused on modifying the structures of the planes in order to fit the desired payload: the autopilot system and the imaging system.
+We need to give an overview of our airframe, autopilot, and payload requirments. Amanda or Anthony should decide how to proceed here based on other good papers.
 
-
-The electronics team was in charge of the autopilot system and the imaging system.  Originally a large and heavy system was to be used for an imaging system, but as the year progress a lighter and smaller alternative was found, which helped the mechanical team in the placement of the imaging system…(I do not know the details of what they did, that’s all Pat)
-
-
-We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air.  For landing, we will do the same process in reverse, and land the plane manually.
-
-
-
-%One thing we need is a good justification for having built two fucking giant airframes. Lets point out that we initially assumed a much heavier payload, but found lighter and smaller alternatives as the year went on. We decided it was better to be too big than too small. A large plane with lower wing loading would be easier to control, and easier to recover in case power is lost. (someone check that math)
+One thing we need is a good justification for having built two fucking giant airframes. Lets point out that we initially assumed a much heavier payload, but found lighter and smaller alternatives as the year went on. We decided it was better to be too big than too small. A large plane with lower wing loading would be easier to control, and easier to recover in case power is lost. (someone check that math)
 
 \section{Flight Vehicle}
 
@@ -128,7 +121,8 @@ Figure goes here: Paparazzi ground station screenshot, or whatever.
 PAT
 
 \section{Imaging System}
-COGAN, MICHAEL write an overview
+
+To obtain images of targets in flight we have created an Imaging System capable of meeting all the requirements of the competition.  The system consists of a pan-tilt camera on the plane, communication software on the plane, and our ``Image Station'' application running on a dedicated laptop.  The Image Station communicates with the plane in real time via two different sets of wireless radios.  Using the Image Station, the operator can view a live video stream from the plane, control the pan-tilt camera remotely, and download and manipulate images.
 
 \subsection{Camera}
 
@@ -138,16 +132,33 @@ MICHAEL: camera interfaces: serial and USB
 
 The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
 
-\subsection{Image Processing}
-MICHAEL, describe flow of control and images in the camera software.
+\subsection{Obtaining Images}
 
-COGAN, describe computer vision algorithms, and anything else we do
+The entire imaging system is controlled by the ``Image Station Operator''.  They view a live video stream coming from the camera on the plane, which is transmitted over a high bandwidth radio.  The operator can also control the camera by sending commands to the plane over an Xbee Radio link.  In order to assist the operator in finding targets, a target locating algorithm will be run on the video feed to highlight possible targets.  At the time of writing work is in progress on this feature, and it is being implemented using the OpenCV library \cite{opencv} with contour detection and polygonal mapping functions.
 
-\subsection{Ground Station Interface}
+\begin{figure} [H]
+  \centering
+  	\includegraphics[width=0.9\textwidth]{../images/ImageStationControls.jpg}
+  	\caption[Image Station Control Panel]{The Control Panel for the Image Station.  Above is a live video feed from the plane.  Below are controls to adjust the pan/tilt of the unit, zoom in/out, take a picture, and reset the camera to a neutral position.}
+  	\label{imagestationcontrols}
+\end{figure}
 
-COGAN, describe the ground station interface
+When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board), and then downloaded to the Image Station over the Xbee connection.
 
-Figure goes here: COGAN, provide a screen shot of the ground station in 'action.' We should try to use images that at least look like they were taken of targets from above. Maybe take pictures from 7th floor CORE, like we said we were going to use to train the cv algorithms.
+\subsection{Downloading Images in Real Time}
+
+Once images are on the plane's computer they are ready to be downloaded over the Xbee Radio link.  Each image is fairly large, and our bandwidth is only around 115200 baud, so we use a bandwidth conserving method to transfer images.  The entire image is first downloaded as a low-res `thumbnail.'  Once that is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  This allows us to quickly obtain high resolution images of the targets of interest.
+
+\begin{figure} [h]
+  \centering
+  	\includegraphics[width=0.9\textwidth]{../images/ImageStationMain.jpg}
+  	\caption[Image Station Interface]{The main interface for the Image Station.  All the images that have been taken are displayed on the top left.  The queue of images to download is on the bottom left.  On the right is the currently displayed image, with target information underneath.}
+  	\label{imagestationinterface}
+\end{figure}
+
+\subsection{Identifying target characteristics}
+
+When an image has been fully downloaded to the ground targets can be identified and tagged with metadata.  Information about the plane's orientation, gps coordinates, altitude, yaw/pitch/roll, and pan/tilt of the camera are sent down with the image.  Using this information the GPS location of the target can be determined using the intrinsic properties of the camera and some basic trigonometry. target shape, color, alphanumeric, alphanumeric color, and orienttion are all entered manually by the operator.
 
 \section{Operation Safety}
 
