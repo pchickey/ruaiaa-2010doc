@@ -25,19 +25,79 @@ We will write the abstract after the rest of the paper is finished. If we're rea
 
 \section{Introduction}
 
-Brief overview of what we accomplished. This should be a very brief chronology of the engineering we've done to date.
+The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal of entering the 2009 AUVSI UAS competition. We didn't make it to the 2009 competition after loosing our aircraft only four weeks before. Our imaging system and autopilot system were also far from ready. 
+
+In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
+
+The team is made of N Rutgers undergraduates
+% List, can we do itemize for this? two columns? needs to be smaller
+Anthony Garrison, President
+Amanda Gaetano, Vice President
+Pat Hickey, Treasurer and Electronics Team Leader
+Greg Quinn, Mechanical Team Leader
+Stephen Indyk, Cogan Noll, John Palmer, Adrien Perkins, Michael Varga, Bradley Lord, David Wescott, and.....
+
+We are advised by
+ Professor Tobias Rossmann,
+ and several members of the Tri-County R/C Club \cite{tricountyRC}:
+ Larry Kosinar,
+ Bill (last name),
+ Mike Korb,
+ (the man who donated daedalus), and
+ Chris (test pilot) amongst many who spent time mentoring us.
+
+We have been generously funded by 
+Rutgers Engineering Governance Council,
+Rutgers Alumni Association, and
+WINLAB, a laboratory of the Rutgers University Department of Electrical Engineering.
+% What was Chris Brocco's Uncle's Company? Something Automation?
+BP Hobbies, 
+
+We would like to acknowledge
+(Adrien's Father), for his prolific networking and promoting of the team;
+Gregg (last name) of BP Hobbies for going out of his way to help us;
+David Devries and Michael Maia, for their technical guidance;
+Professor Chung-chieh Shan, for overseeing Pat's independent study on the IMU design;
+Ivan Seskar, for keeping us (and many other undergrads) in the black;
+Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor.
 
 \section{Systems Engineering}
-The main systems engineering approach that was used in order to finish construction of the planes efficiently and in a timely manner was to break the team into two main groups: the mechanical team and the electronics team.  The mechanical team was in charge of the rebuild and build process of the \emph{Daedalus} and the \emph{Knight Two}, respectively.  In order to maximize efficiency we further divided the mechanical team into sub groups placing members where they were best suited.  During both constructions we split into a wing and tail section group and a fuselage group.  While all the construction was going on, two expert builders from the local R/C club would come and advise us when we were unsure how to proceed in order to have the best balance of weight and strength.  Along with the actual construction of the planes, the mechanical team also focused on modifying the structures of the planes in order to fit the desired payload: the autopilot system and the imaging system.
 
-The electronics team was in charge of the autopilot system and the imaging system.  Originally a large and heavy system was to be used for an imaging system, but as the year progress a lighter and smaller alternative was found, which helped the mechanical team in the placement of the imaging system…(I do not know the details of what they did, that’s all Pat)
+For this entry, we took a close look at our goals and requirments, and dialed back our approach to ensure we would meet the most basic competition requirments successfully.
+We started the design with some broad goals based on our experience in the 2009 competition. 
+Sub-teams and individuals tackled the smaller problems while still keeping an eye on the big picture. 
+
+\subsubsection{Goals}
+\begin{itemize}
+	\item The air vehicle must be stable and slow, with ample payload capacity and 30 minute flight duration. It should be a proven and durable fixed-wing design.
+	\item The autopilot must be based on proven software, so we could focus on improving an existing system rather than reinventing the wheel. We felt the Paparazzi system was full featured and proven, and we wanted to adapt it to our needs.
+	\item The imaging system must be simple and capable. We assume the operator will be burdened with guiding the camera and identifying targets until time and resources permit us to add sensor information and control loops for guidance, and computer vision for identification.
+\end{itemize}
+
+We made design decisions of which competition goals we will attempt. 
+We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk, during development and competition, to our aircraft.
+
+One of the most difficult design decisions was to quantify ``ample payload.'' The payload size and weight is the major determining factor in the aircraft size.
+% -- expand this thought: 
+We started off assuming an electronics (computer + batteries) payload of 2.5lbs and a pan-tilt camera of 2.5lbs and 8 inch diameter.
+
+% Originally a large and heavy system was to be used for an imaging system, but as the year progress a lighter and smaller alternative was found, which helped the mechanical team in the placement of the imaging system(I do not know the details of what they did, that’s all Pat)
 
 
-We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air.  For landing, we will do the same process in reverse, and land the plane manually.
+Our team was divided by area of expertise into a mechanical team and an electrical team.
+The mechanical team began the year with the goal of producing two competition worthy airframes. These were to become the \emph{Daedalus} and \emph{Knight Two}.
+
+We determined, after consulting with R/C experts, that a high wing trainer is the most stable and proven fixed-wing design. Trainers traditionally have light wing loading for slow speed flight, and will be able to carry payload 
+
+% -- donno how much use this is:
+%  During both constructions we split into a wing and tail section group and a fuselage group.  While all the construction was going on, two expert builders from the local R/C club would come and advise us when we were unsure how to proceed in order to have the best balance of weight and strength.  
+
+%Along with the actual construction of the planes, the mechanical team also focused on modifying the structures of the planes in order to fit the desired payload: the autopilot system and the imaging system.
+
+The electronics team was in charge of the autopilot system and the imaging system. 
 
 
 
-%One thing we need is a good justification for having built two fucking giant airframes. Lets point out that we initially assumed a much heavier payload, but found lighter and smaller alternatives as the year went on. We decided it was better to be too big than too small. A large plane with lower wing loading would be easier to control, and easier to recover in case power is lost. (someone check that math)
 
 \section{Flight Vehicle}
 
