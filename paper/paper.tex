@@ -12,6 +12,7 @@
 \usepackage{textcomp}
 \usepackage{multicol}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\itemspace}{	\setlength{\itemsep}{0cm} \setlength{\parskip}{0cm}}
 \hyphenation{auto-nomous construction}
 
 % Limited by competition rules to min font size 10 pt, max pages 20
@@ -34,31 +35,36 @@ In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year
 The team is made of 12 Rutgers undergraduates
 % List, can we do itemize for this? two columns? needs to be smaller
 
-\begin{multicols}{2}
-\begin{itemize}
-	\setlength{\itemsep}{0cm}
-	\setlength{\parskip}{0cm}
-%	\centering
-	\item Anthony Garrison, President
-	\item Amanda Gaetano, Vice President
-	\item Pat Hickey, Treasurer and Electronics Team Leader
-	\item Greg Quinn, Mechanical Team Leader
-%\end{itemize}
 %\begin{multicols}{2}
 %\begin{itemize}
-	\setlength{\itemsep}{0cm}
-	\setlength{\parskip}{0cm}
-%	\centering
-	\item Stephen Indyk 
-	\item Cogan Noll
-	\item John Palmer 
-	\item Adrien Perkins
-	\item Michael Varga 
-	\item Bradley Lord
-	\item David Wescott
-	\item Taras Wallace
-\end{itemize}
-\end{multicols}
+%	\setlength{\itemsep}{0cm}
+%	\setlength{\parskip}{0cm}
+%	\item Anthony Garrison, President
+%	\item Amanda Gaetano, Vice President
+%	\item Pat Hickey, Treasurer and Electronics Team Leader
+%	\item Greg Quinn, Mechanical Team Leader
+%	\item Stephen Indyk 
+%	\item Cogan Noll
+%	\item John Palmer 
+%	\item Adrien Perkins
+%	\item Michael Varga 
+%	\item Bradley Lord
+%	\item David Wescott
+%	\item Taras Wallace
+%\end{itemize}
+%\end{multicols}
+
+\vspace{12 pt}
+
+\begin{tabular}{l l}
+Anthony Garrison, President & Cogan Noll \\
+Amanda Gaetano, Vice President & John Palmer\\
+Pat Hickey, Treasurer and Electronics Team Leader & Adrien Perkins\\
+Greg Quinn, Mechanical Team leader & Michael Varga\\
+Stephen Indyk & (Bradley Lord OR Taras Wallace)\\
+\end{tabular}
+
+\vspace{24 pt}
 
 
 We are advised by
@@ -311,6 +317,52 @@ Our system is designed to gracefully handle any failure while continuing to ensu
 
 \subsection{Procedures}
 Our team employs a clearly defined flight routine every time the engine is started.  This routine ensures that everyone in the starting area is fully alert and aware at all times, that no one stands in a position of known danger (i.e. the prop arc), and that all know when the starter makes contact with the spinner.  A set script with clear key words not only ensures the safety of our team, but also is conducive to efficiency, consistency, and repeatability.
+
+\newpage
+\appendix
+\renewcommand\thesection{Appendix \Alph{section}}
+\section{Pre-flight Procedures}
+\begin{enumerate}
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
+	\item Assemble plane.
+	\item Check all mechanical and electrical connections.
+		\begin{itemize}
+		\itemspace
+		\item Are all nuts/bolts loc-tited?
+		\item Are all servo extentions connected and properly secured?
+		\item Are all access hatches secured?
+		\end{itemize}
+	\item Position wingmen*, centerman**.
+	\item Pilot turns on transmitter, announces ``transmitter on.''
+	\item Pilot requests ``reciever on''.  Centerman turns on reciever, acknowledges.
+	\item Pilot completes surface checks:
+		\begin{itemize}
+		\itemspace
+		\item Ailerons
+		\item Elevator
+		\item Rudder
+		\item Throttle
+		\end{itemize}
+	\item Prime engine.
+	\item Pilot obtains visual and verbal confirmation that wingmen, centerman are in place and alert.
+	\item Pilot requests ``ignition on.''  Centerman moves ignition switch to the ``on'' position and acknowledges.
+	\item Starter requests ``prop clear.''  Starter obtains visual confirmation that no person is standing in the prop arc and announces ``prop clear.''
+	\item Starter announces ``contact'' and starts the engine.
+	\item Starter clears the area.
+	\item Pilot repeats surface and throttle checks at close range.
+	\item Pilot leaves starting area and performs surface and throttle checks from a distance (range test).
+	\item Pilot returns to starting area to prepare for taxi.
+	\item Pilot requests ``wingmen off.''  Wingmen carefully clear the area and acknowledge.
+	\item Pilot requests ``centerman off.''  Centerman carefully clears the area and acknowledge.
+	\item Pilot taxis airplane to appropriate location to begin takeoff.
+	\item Pilot commences takeoff.
+
+
+
+\end{enumerate}
+
+
 
 
 \bibliographystyle{plain}
