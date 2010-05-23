@@ -32,36 +32,13 @@ The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal 
 
 In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
 
-The team is made of 10 Rutgers undergraduates
-% List, can we do itemize for this? two columns? needs to be smaller
-
-%\begin{multicols}{2}
-%\begin{itemize}
-%	\setlength{\itemsep}{0cm}
-%	\setlength{\parskip}{0cm}
-%	\item Anthony Garrison, President
-%	\item Amanda Gaetano, Vice President
-%	\item Pat Hickey, Treasurer and Electronics Team Leader
-%	\item Greg Quinn, Mechanical Team Leader
-%	\item Stephen Indyk 
-%	\item Cogan Noll
-%	\item John Palmer 
-%	\item Adrien Perkins
-%	\item Michael Varga 
-%	\item Bradley Lord
-%	\item David Wescott
-%	\item Taras Wallace
-%\end{itemize}
-%\end{multicols}
-
-\vspace{12 pt}
-
+The team is made of 10 Rutgers undergraduates:
 \begin{tabular}{l l}
 Anthony Garrison, President & Cogan Noll \\
 Amanda Gaetano, Vice President & John Palmer\\
-Pat Hickey, Treasurer and Electronics Team Leader & Adrien Perkins\\
+Pat Hickey, Electronics Team Leader & Adrien Perkins\\
 Greg Quinn, Mechanical Team leader & Michael Varga\\
-Stephen Indyk & (Bradley Lord OR Taras Wallace)\\
+Stephen Indyk & Taras Wallace\\
 \end{tabular}
 
 \vspace{24 pt}
@@ -71,7 +48,7 @@ We are advised by
  Professor Tobias Rossmann,
  and several members of the Tri-County R/C Club \cite{tricountyRC}:
  Larry Kosinar,
- Bill (last name),
+ Bill Perkowski,
  Mike Korb,
  (the man who donated daedalus), and
  Chris (test pilot) amongst many who spent time mentoring us.
@@ -129,7 +106,7 @@ The electronics team was in charge of the autopilot system and the imaging syste
 \section{Flight Vehicle}
 
 At the time of this writing, we have completed and flown a single flight vehicle, which we have named the \emph{Daedalus}.
-We have also nearly completed a very similar backup airframe which serve as a backup in case the \emph{Daedalus} has a disaster. The \emph{Knight Two} will be fitted with nearly identical R/C flight electronics, and accept the same autopilot and imaging system payload as the \emph{Daedalus}
+We have also nearly completed a very similar backup airframe which serve as a backup in case the \emph{Daedalus} has a disaster. The \emph{Knight Two} will be fitted with nearly identical R/C flight electronics, and accept the same autopilot and imaging system payload as the \emph{Daedalus}.
 
 \subsection{Airframe}
 
@@ -138,14 +115,17 @@ Our own custom design, the \emph{Icarus}, suffered a catastrophic structural fai
 
 \subsubsection{Daedalus}
 
-A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-foot wingspan high wing trainer to our club. The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flightworthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload.
+A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-foot wingspan high wing trainer to our club. The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flightworthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered, we tested the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 3.5 lbs electronics payload, would bring the maximum takeoff weight to 25.5lbs.
 
+We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
+We designed a test similar to mimic the 
+Federal Airworthiness Standards' structural requirments\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a 7.5\textdegree dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. accelleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ accelleration, with a saftey factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
+ 
+The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} wings supported 64 lbs (250\% of the maximum take-off weight) under static loading.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
 
-Once rebuilt and covered, we tested the \emph{Daedalus} in our shop to ensure the rebuilt structure was strong enough. Of particular concern was interface between the wings and the center section---it was important to confirm that the wings were mounted and reinforced in a manner that would permit them to carry the load of the plane while in flight.  To this end, we put the \emph{Daedalus} through a series of static and dynamic ``sandbag tests.''  The plane was carefully supported under the center section, nose, and tail while pre-weighted bags of sand were slowly placed symetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} easily supported XX lbs (XX percent of its weight) under static loading.  We then lifted the plane off its supports and jostled it to simulate in-flight motion.  The plane seemed to remain stable, and upon further observation after unloading, no cracks or defects were detected.
+A second test was designed to certify the wing could take a top loading present from a 1.5$g$ accelleration with a saftey factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane 10\textdegree  side to side to simulate uneven loading. Our post-test structure inspection found no warped members or cracked joints.
 
-
-Satisfied, we proceeded through the usual engine and surface tests before taxiing the plane around a parking lot.  We brought the plane back inside, examined it for signs of stress and, finding everything in good condition, deemed the \emph{Daedalus} ready to fly.
-
+Satisfied, made engine and surface tests (see \ref{sec:appendix_preflight}) before taxiing the plane around a parking lot.  We brought the plane back inside, examined it for signs of stress and, finding everything in good condition, deemed the \emph{Daedalus} flightworthy.
 
 Figure goes here: Photos of Daedalus in construction, sandbag testing
 
@@ -178,7 +158,7 @@ Figure may go here: Line drawing of Knight Two. JOHN
 
 \subsubsection{Engine}
 
-Each airframe has a 45cc gasoline engine. Each airframe has a xx ounce gasoline tank. Based on our flight tests, with climbs to 400 feet AGL, a full xx ounce gasoline tank gives us xx minutes of flight time. (can someone guestimate this? Do we have data from break-in, etc)
+Each airframe has a 45cc gasoline engine and 24 ounce gasoline tank. Based on our flight tests, with climbs to 400 feet AGL and a high throttle cruise, we use a little less than 1oz gasoline per minute. While actual fuel consumption may be less, we set a flight time cap at 20 minutes in order to always have a saftey reserve of at least 4oz. We have tested to ensure that, in level flight, the fuel tank will feed the engine until less than $1/2$oz fuel remains.
 
 \subsubsection{Batteries}
 
@@ -322,6 +302,7 @@ Our team employs a clearly defined flight routine every time the engine is start
 \appendix
 \renewcommand\thesection{Appendix \Alph{section}}
 \section{Pre-flight Procedures}
+\label{sec:appendix_preflight}
 \begin{enumerate}
 	\setlength{\itemsep}{0cm}
 	\setlength{\parskip}{0cm}
