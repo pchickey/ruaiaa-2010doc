@@ -90,24 +90,29 @@ Sub-teams and individuals tackled the smaller problems while still keeping an ey
 We made design decisions of which competition goals we will attempt. 
 We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk, during development and competition, to our aircraft.
 
-One of the most difficult design decisions was to quantify ``ample payload.'' The payload size and weight is the major determining factor in the aircraft size.
-% -- expand this thought pch: 
-We started off assuming an electronics (computer + batteries) payload of 2.5lbs and a pan-tilt camera of 2.5lbs and 8 inch diameter.
-
-% Originally a large and heavy system was to be used for an imaging system, but as the year progress a lighter and smaller alternative was found, which helped the mechanical team in the placement of the imaging system(I do not know the details of what they did, that’s all Pat)
+\subsubsection{Airframe System Engineering}
 
 Our team was divided by area of expertise into a mechanical team and an electrical team.
 The mechanical team began the year with the goal of producing two competition worthy airframes. These were to become the \emph{Daedalus} and \emph{Knight Two}.
 
 We determined, after consulting with R/C experts, that a high wing trainer is the most stable and proven fixed-wing design. Trainers traditionally have light wing loading for slow speed flight, and will be able to carry payload 
 
-% -- donno how much use this is:
-%  During both constructions we split into a wing and tail section group and a fuselage group.  While all the construction was going on, two expert builders from the local R/C club would come and advise us when we were unsure how to proceed in order to have the best balance of weight and strength.  
+One of the most difficult design decisions was to quantify ``ample payload.'' The payload size and weight is the major determining factor in the aircraft size.
+% -- amanda will finish this by mon noon: 
+We started off assuming an electronics (computer + batteries) payload of 2.5lbs and a pan-tilt camera of 2.5lbs and 8 inch diameter.
 
-%Along with the actual construction of the planes, the mechanical team also focused on modifying the structures of the planes in order to fit the desired payload: the autopilot system and the imaging system.
+\subsubsection{Autopilot System Engineering}
 
 The electronics team was in charge of the autopilot system and the imaging system. 
-% not sure what i want to do to expand here pch
+
+\subsubsection{Payload System Engineering}
+% Cogan, please explain the overall design decisions here. These are one sentence points in not great english, maybe make these two sentences each. 
+We used an off the shelf consumer camera because small, cheap, capable .
+We needed a linux based computer to interface with camera - only viable option, if we don't use a prebuilt system.
+We used our own pantilt unit because we wanted it to custom fit our camera.
+and it turned out our camera choice heavily effected our pantilt design, and allowed us to have a very compact system.
+ We used an independent radio link because we weren't sure about integration with the autopilot system, and we wanted to be able to switch the way the autopilot worked without dependencies.
+We wrote our own ground station software out of necessity, turned out to be excellent design decision.
 
 \section{Flight Vehicle}
 
@@ -232,7 +237,7 @@ The LANC protocol is based on a 9600 baud UART serial connection, and is availab
 The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen. 
 Still pictures are taken based on targets spotted in this video feed. Those images are stored on the camera's memory card.
 
-% please give details of still pictures, including the field of view per pixel. include a quick table of resolving power (projection of pixel field of view, center of frame, onto ground) at altitudes [100,200,300,400 agl] for straight down and 45 degree angle. 
+% please give details of still pictures, including the field of view per pixel. include a quick table of resolving power (projection of pixel field of view, center of frame, onto ground) at altitudes [100,200,300,400 agl] for straight down and 45 degree angle. Please also give the resolving power of the video viewfinder
 
 \subsection{Camera-Computer Interface}
 
