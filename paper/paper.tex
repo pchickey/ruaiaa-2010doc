@@ -2,7 +2,7 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{hyperref}
 \hypersetup{ colorlinks=true
-           , linkcolor=cyan
+           , linkcolor=blue
            , pdfnewwindow=true 
            }
 \usepackage{amsmath}
@@ -28,9 +28,11 @@
 \author{Patrick Hickey et. al.}
 \input{./title.tex}
 
-\begin{abstract}
-We will write the abstract after the rest of the paper is finished. If we're really close to the page limit, we may be able to omit it.
-\end{abstract}
+% We are definitely going to hit the page limit. No more abstract.
+%\begin{abstract}
+%We will write the abstract after the rest of the paper is finished. 
+%If we're really close to the page limit, we may be able to omit it.
+%\end{abstract}
 
 \section{Introduction}
 
@@ -242,7 +244,7 @@ The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
 \begin{figure}
 	\subfloat[Linkage Detail View]{\label{fig:pantilt_linkdetail} 
 			\includegraphics[width=0.6\textwidth]{../images/pantilt_linkdetail.png}}
-	\subfloat[Linkage Velocity Plots]{\label{fig:pantilt_linkdetail} 
+	\subfloat[Linkage Velocity Plots]{\label{fig:pantilt_linkplots} 
 			\includegraphics[width=0.4\textwidth]{../images/pantilt_linkplot.png}}
 	\caption{Tilt Linkage Detail}
 	\label{fig:pantilt_link}
@@ -252,10 +254,13 @@ In order to meet the target imaging requirments, we needed to add both pan and t
 We designed a pan tilt unit which make it possible to image the entire hemisphere below the fuselage of the aircraft.
 
 We took advantage of the MHS-PM5's swiveling lens assembly 
-(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \ref{hitechs77bb}, and is capable of \degrees{180} rotation.
-The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{720} rotation. Both servos are powered and controlled by the Camera Control board.
+(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \ref{hitechs77bb}, and is capable of \degrees{180} rotation. Figures \ref{fig:pantilt} and \ref{fig:pantilt_linkdetail} show the camera lens tilted at \degrees{45} below the horizon.
+The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Camera Control board.
 
-The total height of the imaging system is 8.75", only 4'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assembly a bit wider. Because the maximum rotation is only \degrees{270}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 360} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete.
+The total height of the imaging system is 8.75", only 4'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete and installed in the aircraft. 
+
+The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular accelleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.
+The endpoints of the tilt rotation rang are calibrated and enforced in software, because pushing the camera outside this range may damage it.
 
 \subsection{Obtaining Images}
 
@@ -306,7 +311,7 @@ Our team employs a clearly defined flight routine every time the engine is start
 \newpage
 \appendix
 \renewcommand\thesection{Appendix \Alph{section}}
-\section{Pre-flight Procedures}
+\section{Preflight Procedures}
 \label{sec:appendix_preflight}
 \begin{enumerate}
 	\setlength{\itemsep}{0cm}
