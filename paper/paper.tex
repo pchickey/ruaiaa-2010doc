@@ -1,5 +1,6 @@
 \documentclass[10pt,twocolumns]{report}
 \usepackage[pdftex]{graphicx}
+\usepackage[left=1.5in, right=1.5in, top=1.25in, bottom=1.25in]{geometry}
 \usepackage{hyperref}
 \hypersetup{ colorlinks=true
            , linkcolor=blue
@@ -76,7 +77,7 @@ Professor Chung-chieh Shan, for overseeing Pat's independent study on the IMU de
 Ivan Seskar, for keeping us (and many other undergrads) in the black;
 Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor.
 
-\begin{figure}[b]
+\begin{figure}[b!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../images/wreckage.jpg}
 	\caption{The recovery of our 2009 entry, the \emph{Icarus}}
@@ -158,29 +159,42 @@ We have also nearly completed a very similar backup airframe which serve as a ba
 We elected to pursue a kit-type airplane rather than our own design. 
 Our own custom design, the \emph{Icarus}, suffered a catastrophic structural failure last year. From this, we learned that custom structures require much more testing and revision than a proven kit. We also reconsidered our payload requirements and decided we could easily modify a kit plane to accept our autopilot and imaging system.
 
-\subsubsection{Daedalus}
 
-A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-foot wingspan high wing trainer to our club. The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flight-worthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered, we tested the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 3.5 lbs electronics payload, would bring the maximum takeoff weight to 25.5lbs.
-\begin{wrapfigure}{r}{0.4\textwidth}
-	\includegraphics[width=0.37\textwidth]{../images/daedalus_sandbagtest.jpg}
-	\caption{Load testing the underside of the \emph{Daedalus}'s wings. Shown with 16lbs of load.}
-	\label{fig:sandbagtest}
+
+\subsubsection{Daedalus}
+\begin{wrapfigure}{l}{0.4\textwidth}
+	\includegraphics[width=0.37\textwidth]{../images/daedalus_isometric.jpg}
+	\caption{The \emph{Daedalus}}
+	\label{fig:daedalus}
 \end{wrapfigure}
+A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-foot wingspan high wing trainer to our club. The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flight-worthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered, we tested the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 3.5 lbs electronics payload, would bring the maximum takeoff weight to 25.5lbs.
+
 We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
 We designed a test similar to mimic the 
 Federal Airworthiness Standards' structural requirements\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a \degrees{7.5} dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. acceleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ acceleration, with a safety factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
  
 The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symmetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} wings supported 64 lbs (250\% of the maximum take-off weight) under static loading.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
-
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\includegraphics[width=0.37\textwidth]{../images/daedalus_sandbagtest.jpg}
+	\caption{Load testing the underside of the \emph{Daedalus}'s wings. Shown with 16lbs of load.}
+	\label{fig:sandbagtest}
+\end{wrapfigure}
 A second test was designed to certify the wing could take a top loading present from a 1.5$g$ acceleration with a safety factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane \degrees{10} side to side to simulate uneven loading. Our post-test structure inspection once again found no warped members or cracked joints.
 
 Satisfied, made engine and surface tests (see \ref{sec:appendix_preflight}) before taxiing the plane around a parking lot.  We brought the plane back inside, examined it for signs of stress and, finding everything in good condition, deemed the \emph{Daedalus} flight-worthy.
 
-Figure goes here: Photos of Daedalus in construction, sandbag testing
+\begin{wrapfigure}{l}{0.4\textwidth}
+	\centering
+	\subfloat[The unfinished \emph{Knight Two}]{\label{fig:knighttwo_construction} 
+			\includegraphics[width=0.37\textwidth]{../images/knighttwo_uncovered_outdoors.jpg}}
+\\
+	\subfloat[A completed 12 Foot Telemaster. Photo Credit: Hobby Lobby] {\label{fig:knighttwo_12ft_telemaster} 
+			\includegraphics[width=0.37\textwidth]{../images/telemaster_12ft_hobbylobby.jpg}}
+  	\label{fig:knighttwo}
+  	\caption[Knight Two]{Knight Two}
 
+\end{wrapfigure}
 Someone please detail the outer dimensions. The inner dimensions, space used for flight electronics, space used for payload underneath. Landing gear height. Number of servos and their locations
-
-Figure may go here: Line drawing of Daedalus. JOHN
 
 \subsubsection{Knight Two}
 
@@ -190,15 +204,7 @@ We named it the \emph{Knight Two} after the Rutgers University mascot, the Scarl
 
 Since our testing plan for the \emph{Daedalus} was successful, we will follow the same plan when, in the coming weeks, we finish building \emph{Knight Two}.
 
-\begin{figure}
-	\centering
-	\subfloat[The unfinished \emph{Knight Two}]{\label{fig:knighttwo_construction} 
-			\includegraphics[width=0.4\textwidth]{../images/knighttwo_underconstruction.jpg}}
-	\subfloat[A completed 12 Foot Telemaster. Photo Credit: Hobby Lobby] {\label{fig:knighttwo_12ft_telemaster} 
-			\includegraphics[width=0.4\textwidth]{../images/telemaster_12ft_hobbylobby.jpg}}
-  	\label{fig:knighttwo}
-  	\caption[Knight Two]{Knight Two}
-\end{figure}
+
 Someone please detail the outer dimensions. The inner dimensions, space used for flight electronics, space used for payload underneath. Landing gear height. Number of servos and their locations
 
 Figure may go here: Line drawing of Knight Two. JOHN
