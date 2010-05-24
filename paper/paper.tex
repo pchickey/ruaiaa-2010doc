@@ -13,6 +13,12 @@
 \usepackage{multicol}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \newcommand{\itemspace}{	\setlength{\itemsep}{0cm} \setlength{\parskip}{0cm}}
+\newcommand{\degrees}[1]
+{
+\begin{math}
+#1^{\circ} 
+\end{math}
+}
 \hyphenation{auto-nomous construction}
 
 % Limited by competition rules to min font size 10 pt, max pages 20
@@ -117,11 +123,11 @@ A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-
 
 We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
 We designed a test similar to mimic the 
-Federal Airworthiness Standards' structural requirments\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a 7.5\textdegree dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. accelleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ accelleration, with a saftey factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
+Federal Airworthiness Standards' structural requirments\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a \degrees{7.5} dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. accelleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ accelleration, with a saftey factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
  
 The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} wings supported 64 lbs (250\% of the maximum take-off weight) under static loading.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
 
-A second test was designed to certify the wing could take a top loading present from a 1.5$g$ accelleration with a saftey factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane 10\textdegree  side to side to simulate uneven loading. Our post-test structure inspection found no warped members or cracked joints.
+A second test was designed to certify the wing could take a top loading present from a 1.5$g$ accelleration with a saftey factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane \degrees{10} side to side to simulate uneven loading. Our post-test structure inspection found no warped members or cracked joints.
 
 Satisfied, made engine and surface tests (see \ref{sec:appendix_preflight}) before taxiing the plane around a parking lot.  We brought the plane back inside, examined it for signs of stress and, finding everything in good condition, deemed the \emph{Daedalus} flightworthy.
 
@@ -156,7 +162,7 @@ Figure may go here: Line drawing of Knight Two. JOHN
 
 \subsubsection{Engine}
 
-Each airframe has a 45cc gasoline engine and 24 ounce gasoline tank. Based on our flight tests, with climbs to 400 feet AGL and a high throttle cruise, we use a little less than 1oz gasoline per minute. While actual fuel consumption may be less, we set a flight time cap at 20 minutes in order to always have a saftey reserve of at least 4oz. We have tested to ensure that, in level flight, the fuel tank will feed the engine until less than $1/2$oz fuel remains.
+Each airframe has a 45cc gasoline engine and 24 ounce gasoline tank. Based on our flight tests, with climbs to 400 feet AGL and a high throttle cruise, we use a little less than 1oz gasoline per minute. While actual fuel consumption may be less, we set a flight time cap at 20 minutes in order to always have a saftey reserve of at least 4oz. We have tested to ensure that, within \degrees{\pm10} of level flight, the fuel tank will feed the engine until less than $1/2$oz fuel remains.
 
 \subsubsection{Batteries}
 
@@ -226,10 +232,10 @@ The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
 \begin{figure}
 	\centering
 	\subfloat[Isometric View]{\label{fig:pantilt_isometric} 
-			\includegraphics[width=0.9\textwidth]{../images/pantilt_isometric.png}}
+			\includegraphics[width=0.75\textwidth]{../images/pantilt_isometric.png}}
 \\
-	\subfloat[Side View]{\label{fig:pantilt_side} 
-			\includegraphics[width=0.9\textwidth]{../images/pantilt_side.png}}
+	\subfloat[Side View.]{\label{fig:pantilt_side} 
+			\includegraphics[width=0.75\textwidth]{../images/pantilt_side.png}}
 	\caption{Pan Tilt Unit}
 	\label{fig:pantilt}
 \end{figure}
@@ -246,9 +252,10 @@ In order to meet the target imaging requirments, we needed to add both pan and t
 We designed a pan tilt unit which make it possible to image the entire hemisphere below the fuselage of the aircraft.
 
 We took advantage of the MHS-PM5's swiveling lens assembley 
-(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens 135\textdegree back from straight forward, as shown in Figure \ref{}
-The camera and tilt servo assembley is attached to the aircraft on a rotating mount. 
+(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \ref{hitechs77bb}, and is capable of \degrees{180} rotation.
+The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembley. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{720} rotation. Both servos are powered and controlled by the Camera Control board.
 
+The total height of the imaging system is 8.75", only 4'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assebley a bit wider. Because the maximum rotation is only \degrees{270}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 360} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete.
 
 \subsection{Obtaining Images}
 
