@@ -222,7 +222,21 @@ To obtain images of targets in flight we have created an Imaging System capable 
 	\caption{Sony MHS-PM5. Image Credit: Sony}
 	\label{fig:camera}
 \end{figure}
-MICHAEL : physical specification of camera (size, 5 megapixel stills). We selected it because...
+
+We selected the Sony MHS-PM5 camera as the basis of our imaging system. Marketed as a pocket 1080i video camera capable of 5 megapixel (MP) still images, we primarily selected the camera because it features a swiveling lens at one end of the body and it features Sony's LANC (Local Application Control Bus System, ref{lanc}). Because the swiveling lens is at one end of the body, we can mount the camera primarily inside the fuselage of the aircraft, which will protect it from damage on takeoff and landing. Internal mounting also helps reduce drag. The swiveling lens is an important feature because it allows us to achieve two rotational degrees of freedom while only rotating the body about one axis. This simplifies the pan tilt unit design.
+
+The LANC protocol is based on a 9600 baud UART serial connection, and is available on the PM5's 10-pin ``Multi-AV'' connector. Camera control commands, which include commands to zoom in, zoom out, and take a still picture, is publicly available \ref{boehmenl_lanc}. Also on the ``Multi-AV'' connector are the signals for NTSC video and audio output. We use both the NTSC output and LANC signals on this connector using a commercially available adapter cable \ref{lanc_multiav_cable}.
+
+% first citation should go to http://www.boehmel.de/lanc.htm
+
+We use the PM5 to transmit NTSC video to the ground, where it is viewed by an operator. The operator can wirelessly trigger a still picture, which is stored on the PM5's 2GB MemoryStickDuo card.
+
+\subsection{Camera-Computer Interface}
+
+ We can access the contents of that card via the PM5's USB connector. When attached to a computer, the PM5 powers the camera off and appears as a USB Mass Storage Device. In order to use the PM5 as both a camera and Mass Storage Device in flight, we have spliced a transistor into the power line on the USB cable. We control whether the camera detects it is connected via USB by blocking or allowing current in that line. 
+
+%Overview of Ground Station Commands
+%Some of the commands that the ground station can issue to the plane are capture image, zoom in, zoom out, crop image, download crop, generate crop, pan left, pan right, tilt up and tilt down. These commands are initiate by a simple button press on the ground station gui program. The ground station sends a signal to the plane computer through a radio. The plane software then handles the command directly or may forward it on to the microcontroller. The capture image, pan and tilt commands are forwarded onto the microcontroller as they involve the lanc interface with the camera and the servos. The download crop and generate crop commands are handled directly by the computer since the data necessary to carry out these functions exists on its hard drive..
 
 MICHAEL: camera interfaces: serial and USB 
 
@@ -277,7 +291,10 @@ When a picture is taken on the plane it is immediately saved on the camera's mem
 
 \subsection{Downloading Images in Real Time}
 
-Once images are on the plane's computer they are ready to be downloaded over the Xbee Radio link.  Each image is fairly large, and our bandwidth is only around 115200 baud, so we use a bandwidth conserving method to transfer images.  The entire image is first downloaded as a low-res `thumbnail.'  Once that is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  This allows us to quickly obtain high resolution images of the targets of interest.
+Once images are on the plane's computer they are ready to be downloaded over a 2.4GHz XBee radio link.  Each image is fairly large, and our bandwidth is only around 115200 baud % actually throughput, at worst-case, is half this.
+, so we select only the most important part of the images to download. The entire image is first downloaded as a low-res `thumbnail.'  Once that is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  This allows us to quickly obtain high resolution images of the targets of interest.
+
+% Please state the sizes of the thumbnail and cropped images, compared to the total image size, and state the average download times of each, in a table. this will make our improvements dramatic.
 
 \begin{figure} [h]
   \centering
