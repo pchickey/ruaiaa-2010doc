@@ -76,20 +76,24 @@ Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor
 
 \section{Systems Engineering}
 
+\subsection{Goals}
 For this entry, we took a close look at our goals and requirements, and dialed back our approach to ensure we would meet the most basic competition requirements successfully.
-We started the design with some broad goals based on our experience in the 2009 competition. 
-Sub-teams and individuals tackled the smaller problems while still keeping an eye on the big picture. 
+We started the design by forming, as a team, some broad goals based on our experience in the 2009 competition.
+These formed the basis on which sub-teams and individuals tackled the smaller problems while still keeping an eye on the big picture. 
 
-\subsubsection{Goals}
+We also wanted to balance building with buying, keeping in mind our slim finances. While its impossible to truly start from scratch\footnote{``If you want to make an apple pie from scratch, you must first create the universe'' - Dr. Carl Sagan \cite{saganquote}}, we tried to build whatever we could given the 16th June competition deadline. 
+
+% footnote is broken (breaks from bottom of page one onto bottom of page two), something about the documentclass needs to be changed so it doesn't assume pages are next to each other (book-like)?
+
 \begin{itemize}
-	\item The air vehicle must be stable and slow, with ample payload capacity and 30 minute flight duration. It should be a proven and durable fixed-wing design.
-	\item The autopilot must be based on proven software, so we could focus on improving an existing system rather than reinventing the wheel. We felt the Paparazzi system was full featured and proven, and we wanted to adapt it to our needs.
-	\item The imaging system must be simple and capable. We assume the operator will be burdened with guiding the camera and identifying targets until time and resources permit us to add sensor information and control loops for guidance, and computer vision for identification.
+	\item The air vehicle must be stable and slow, with ample payload capacity and 20 minute flight duration. It should be a proven and durable fixed-wing design.
+	\item The autopilot must be based on a proven system, so we could focus on improving an existing system rather than reinventing the wheel. It also must be open-source, both because of the high cost commercial systems, and because we want to learn about and experiment with the internals of our autopilot system.
+	\item The imaging system must be simple and capable. We assume the operator will be burdened with guiding the camera and identifying targets until time and resources permit us to add sensor information and control loops for guidance, and computer vision for identification. It will be custom built, because we could not find any affordable systems available commercially.
 \end{itemize}
 
 We made design decisions of which competition goals we will attempt. 
 We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk, during development and competition, to our aircraft.
-
+\subsection{System Design Decisions}
 \subsubsection{Airframe System Engineering}
 
 Our team was divided by area of expertise into a mechanical team and an electrical team.
@@ -101,9 +105,23 @@ One of the most difficult design decisions was to quantify ``ample payload.'' Th
 % -- amanda will finish this by mon noon: 
 We started off assuming an electronics (computer + batteries) payload of 2.5lbs and a pan-tilt camera of 2.5lbs and 8 inch diameter.
 
+\subsubsection{Electronics System Engineering}
+
+The electronics team was in charge of the autopilot system and the imaging system. The biggest system design choice we made was to use a single board Linux-based flight computer as the platform for both systems. We felt that the best way to develop software which interfaces with a wide variety of analog and digital electrical systems, has complicated information flow requirements, 
+
+We felt the Paparazzi system was full featured and proven, and we wanted to adapt it to our needs.
+
+\subsubsection{Safety of Linux Based Flight Computer}
+
+We acknowledge that a Linux based flight computer does not support the requirements for hard real-time, deterministic computing that would be required of any real-world autonomous system. Given the resources available to the team (time, money, and manpower), such a fully assured system is out of reach. 
+
+We elected to take many steps in the software engineering to help ensure our flight computer will operate reliably. The most important of these was code review and incremental testing. Both Pat Hickey and Bradley Lord became intimately familiar with the source code and control flow inside the autopilot software, and all patches were reviewed and tested by both engineers. Numerous other safety measures will be described in Section \ref{sec:autopilot_software}.
+
+Because our entry is essentially an experimental system, and will always be operated with a safety pilot present, we engineered the safety pilot override to operate independently from the flight computer. We have ensured that, short of losing power to the radio control receiver and servos, the safety pilot will always be able to take over at a moment's notice. We have also ensured that the flight computer's servo controller will be able to detect a loss of computer control and servos to a recoverable default. Along with careful preflight testing, careful observation, and definitive analysis of any errors encountered during flight, these measures meet the spirit and letter of competition rules.
+
 \subsubsection{Autopilot System Engineering}
 
-The electronics team was in charge of the autopilot system and the imaging system. 
+As stated previously, the Paparazzi system is the most capable and proven open-source autopilot system available. The first task was to select hardware which would allow us to port the airborne code from the Paparazzi's standard microcontroller-based autopilot hardware to our flight computer.
 
 \subsubsection{Payload System Engineering}
 % Cogan, please explain the overall design decisions here. These are one sentence points in not great english, maybe make these two sentences each. 
@@ -113,6 +131,8 @@ We used our own pantilt unit because we wanted it to custom fit our camera.
 and it turned out our camera choice heavily effected our pantilt design, and allowed us to have a very compact system.
  We used an independent radio link because we weren't sure about integration with the autopilot system, and we wanted to be able to switch the way the autopilot worked without dependencies.
 We wrote our own ground station software out of necessity, turned out to be excellent design decision.
+
+
 
 \section{Flight Vehicle}
 
@@ -201,6 +221,7 @@ Description of each input, output interface.
 
 Figure goes here: Hardware connection diagram. PAT
 \subsection{Software}
+\label{sec:autopilot_software}
 PAT
 
 Figure goes here: interprocess communication. PAT
@@ -284,7 +305,7 @@ The camera and tilt servo assembley is attached to the aircraft on a rotating mo
 
 The total height of the imaging system is 8.75", only 4'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete and installed in the aircraft. 
 
-The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular accelleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.
+The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular acceleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.
 The endpoints of the tilt rotation rang are calibrated and enforced in software, because pushing the camera outside this range may damage it.
 
 \subsection{Obtaining Images}
