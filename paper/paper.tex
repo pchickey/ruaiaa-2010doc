@@ -229,18 +229,22 @@ The LANC protocol is based on a 9600 baud UART serial connection, and is availab
 
 % first citation should go to http://www.boehmel.de/lanc.htm
 
-We use the PM5 to transmit NTSC video to the ground, where it is viewed by an operator. The operator can wirelessly trigger a still picture, which is stored on the PM5's 2GB MemoryStickDuo card.
+The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen. 
+Still pictures are taken based on targets spotted in this video feed. Those images are stored on the camera's memory card.
 
 \subsection{Camera-Computer Interface}
 
- We can access the contents of that card via the PM5's USB connector. When attached to a computer, the PM5 powers the camera off and appears as a USB Mass Storage Device. In order to use the PM5 as both a camera and Mass Storage Device in flight, we have spliced a transistor into the power line on the USB cable. We control whether the camera detects it is connected via USB by blocking or allowing current in that line. 
+We access the still pictures on the memory card via the PM5's USB connector. When attached to a computer, the PM5 powers the camera off and appears as a USB Mass Storage Device. In order to use the PM5 as both a camera and Mass Storage Device in flight, we have spliced a transistor into the power line on the USB cable. We control whether the camera detects it is connected via USB by blocking or allowing current in that line. 
 
+% cogan, please finish up this section. Some of the information may be redundant.
+% we also need a figure of this system, labeling all the components and connections.
+
+% from michael varga:
 %Overview of Ground Station Commands
 %Some of the commands that the ground station can issue to the plane are capture image, zoom in, zoom out, crop image, download crop, generate crop, pan left, pan right, tilt up and tilt down. These commands are initiate by a simple button press on the ground station gui program. The ground station sends a signal to the plane computer through a radio. The plane software then handles the command directly or may forward it on to the microcontroller. The capture image, pan and tilt commands are forwarded onto the microcontroller as they involve the lanc interface with the camera and the servos. The download crop and generate crop commands are handled directly by the computer since the data necessary to carry out these functions exists on its hard drive..
-
-MICHAEL: camera interfaces: serial and USB 
-
-The camera will be mounted in a pan and tilt unit, which will ... STEVE, PAT
+%Target Verification
+%A live video feed is forwarded from the camera through a ntsc video transmitter. The ground station laptop contains a ntsc video receiver so it may be displayed on the screen. When the operator sees a target in the view of the camera he issues a command to the plane to capture an image of the camera’s current view. These images will be stored on the plane and ready for download when instructed by the ground station operator.
+%The original full resolution images are too large to be downloaded directly.  A lower resolution picture is generated for every high resolution image that is captured. The ground station operator must download and look at the thumbnail to select a rectangular region that encompasses the target. A command is issued to the plane that generates a crop from the original higher resolution image using the selected rectangular region. The ground station operator may then download this newly generated crop to verify the target with more precision.
 
 \subsection{Pan Tilt Unit}
 
@@ -278,7 +282,7 @@ The endpoints of the tilt rotation rang are calibrated and enforced in software,
 
 \subsection{Obtaining Images}
 
-The entire imaging system is controlled by the ``Image Station Operator''.  They view a live video stream coming from the camera on the plane, which is transmitted over a high bandwidth radio.  The operator can also control the camera by sending commands to the plane over an Xbee Radio link.  In order to assist the operator in finding targets, a target locating algorithm will be run on the video feed to highlight possible targets.  At the time of writing work is in progress on this feature, and it is being implemented using the OpenCV library \cite{opencv} with contour detection and polygonal mapping functions.
+The entire imaging system is controlled by the ``Image Station Operator''.  They view a live video stream coming from the camera on the plane, which is transmitted over a high bandwidth radio.  The operator can also control the camera by sending commands to the plane over the XBee radio link.  In order to assist the operator in finding targets, a target locating algorithm will be run on the video feed to highlight possible targets.  At the time of writing work is in progress on this feature, and it is being implemented using the OpenCV library \cite{opencv} with contour detection and polygonal mapping functions.
 
 \begin{figure} [H]
   \centering
@@ -287,7 +291,7 @@ The entire imaging system is controlled by the ``Image Station Operator''.  They
   	\label{fig:imagestationcontrols}
 \end{figure}
 
-When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board), and then downloaded to the Image Station over the Xbee connection.
+When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board), and then downloaded to the Image Station over the XBee connection.
 
 \subsection{Downloading Images in Real Time}
 
