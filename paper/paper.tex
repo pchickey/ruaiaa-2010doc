@@ -1,4 +1,4 @@
-\documentclass[10pt]{report}
+\documentclass[10pt,twocolumns]{report}
 \usepackage[pdftex]{graphicx}
 \usepackage{hyperref}
 \hypersetup{ colorlinks=true
@@ -7,6 +7,7 @@
            }
 \usepackage{amsmath}
 \usepackage{subfig}
+\usepackage{wrapfig}
 \usepackage{listings}
 \usepackage{float}
 \usepackage{textcomp}
@@ -160,7 +161,11 @@ Our own custom design, the \emph{Icarus}, suffered a catastrophic structural fai
 \subsubsection{Daedalus}
 
 A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-foot wingspan high wing trainer to our club. The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flight-worthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered, we tested the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 3.5 lbs electronics payload, would bring the maximum takeoff weight to 25.5lbs.
-
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\includegraphics[width=0.37\textwidth]{../images/daedalus_sandbagtest.jpg}
+	\caption{Load testing the underside of the \emph{Daedalus}'s wings. Shown with 16lbs of load.}
+	\label{fig:sandbagtest}
+\end{wrapfigure}
 We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
 We designed a test similar to mimic the 
 Federal Airworthiness Standards' structural requirements\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a \degrees{7.5} dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. acceleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ acceleration, with a safety factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
