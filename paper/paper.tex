@@ -1,4 +1,4 @@
-\documentclass[10pt]{report}
+\documentclass[pdftex,10pt,letter]{article}
 \usepackage[pdftex]{graphicx}
 \usepackage[left=1.5in, right=1.5in, top=1.25in, bottom=1.25in]{geometry}
 \usepackage{hyperref}
@@ -36,7 +36,7 @@
 %If we're really close to the page limit, we may be able to omit it.
 %\end{abstract}
 
-\section{Introduction TWO}
+\section{Introduction}
 
 The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal of entering the 2009 Association for Unmanned Vehicle Systems International (AUVSI)\cite{auvsiweb} Unmanned Air Systems (UAS) competition\cite{uasweb}. We didn't make it to the 2009 competition after losing our aircraft only four weeks before. Our imaging system and autopilot system were also far from ready. In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
 
@@ -55,8 +55,8 @@ We are advised by
  and several members of the Tri-County R/C Club \cite{tricountyRC}:
  Larry Kosinar,
  Bill Perkowski,
+Chris Eivan,
 and  Mike Korb, 
-%and Chris (test pilot) 
 amongst many who spent time mentoring us.
 
 We have been generously funded by 
@@ -76,7 +76,7 @@ Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor
 
 \begin{figure}[b!]
 	\centering
-	\includegraphics[width=0.6\textwidth]{../images/wreckage.jpg}
+	\includegraphics[width=0.75\textwidth]{../images/wreckage.jpg}
 	\caption{The recovery of our 2009 entry, the \emph{Icarus}}
 	\label{fig:wreckage}
 \end{figure}
@@ -148,7 +148,7 @@ It was difficult to find a camera to base our imaging system on which met all of
 
 Requirement 4 had the greatest effect on our design decision. Typically, only high-end SLR-type still cameras provide a socket for remote control. These are beyond our price range, and are much larger and heavier than we would like.
 
-We built a prototype using a Canon Powershot S5 IS \cite{powershotS5}, a camera which has no electrical remote control input. We soldered wires to the push-button pads for the shutter and zoom buttons so we could override them remotely. Those wires were attached to isolating transistors, and a microcontroller was used for control. After some time, this clever circumvention of the factory anti-static shielding resulted in a burnt out camera. We abandoned this scheme.
+We built a prototype using a Canon Powershot S3 IS \cite{powershotS3}, a camera which has no electrical remote control input. We soldered wires to the push-button pads for the shutter and zoom buttons so we could override them remotely. Those wires were attached to isolating transistors, and a microcontroller was used for control. After some time, this clever circumvention of the factory anti-static shielding resulted in a burnt out camera. We abandoned this scheme.
 
 \section{Flight Vehicle}
 
@@ -397,10 +397,12 @@ Our system is designed to gracefully handle any failure while continuing to ensu
 \begin{itemize}
 	\setlength{\itemsep}{0cm}
 	\setlength{\parskip}{0cm}
-	\item Channel 5 (?) allows quick switch to safety pilot in case of autopilot malfunction.
-	\item If the plane loses contact with the ground station for more than XX seconds, the autopilot will default to a ``return home mode'' that will direct the plane towards the ground station in hopes of reestablishing a connection.  If the connection remains dead for XX minutes, the autopilot will direct the plane to [DO SOMETHING?]
-	\item Channel 6 (?) functions as a remote kill switch, ensuring the ability to cut power to the engine if an emergent situation precludes direct manual shut off.
-	\item etc?
+	\item The channel 5 toggle switch determines whether the radio control transmitter, or the autopilot, has control over the flight control servos. The radio control safety pilot may disengage the autopilot at any time by flicking this switch.
+	\item If the plane loses telemetry with the ground station for more than 10 seconds, the autopilot will default to a ``return home mode'' that will direct the plane towards the ground station in hopes of reestablishing a connection.  
+	\item If the connection telemetry remains dead for 30 seconds, the autopilot will bring the servos to a predefined default (throttle closed, elevator up, rudder right, ailerons left). The servos will remain in that position until the safety pilot takes control of the aircraft.
+	\item If the flight computer does not provide the servo controller with a new servo output value for longer than 2 seconds, the servo controller will bring the servos to a predefined default (throttle closed, elevator up, rudder right, ailerons left).  The servos will remain in that position until the safety pilot takes control of the aircraft.
+	\item During engine start, the centerman (see \ref{appendix_preflight}) may kill the engine at any time with the ignition switch located on the right side of the aircraft, behind the engine mount.
+	\item Radio control channel 6 functions as a remote kill switch on the \emph{Knight Two}, disengaging the electronic ignition system of the engine. (The \emph{Daedalus} has a magneto ignition, so we only have the manual kill switch behind the engine mount)
 \end{itemize}
 
 \subsection{Procedures}
@@ -452,8 +454,14 @@ A safety observer is defined as a person, devoid of any additional specific resp
 
 \end{enumerate}
 
+\newpage
+
 \bibliographystyle{plain}
 %\renewcommand{\refname}{\section{Citations}}
-\bibliography{citations}
+\bibliography{paper}
+
+The \LaTeX$\,$ source and figures of this paper are available on github:
+
+\url{http://github.com/pchickey/ruaiaa-2010doc/}
 
 \end{document}
