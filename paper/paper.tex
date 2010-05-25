@@ -1,6 +1,6 @@
 \documentclass[pdftex,10pt,letter]{article}
 \usepackage[pdftex]{graphicx}
-\usepackage[left=1.5in, right=1.5in, top=1.25in, bottom=1.25in]{geometry}
+\usepackage[left=1.25in, right=1.25in, top=1.25in, bottom=1.25in]{geometry}
 \usepackage{hyperref}
 \hypersetup{ colorlinks=true
            , linkcolor=blue
@@ -150,19 +150,19 @@ We built a prototype using a Canon Powershot S3 IS \cite{powershotS3}, a camera 
 At the time of this writing, we have completed and flown a single flight vehicle, which we have named the \emph{Daedalus}.
 We have also nearly completed a very similar backup airframe which will serve as a backup in case the \emph{Daedalus} has a disaster. The \emph{Knight Two} will be fitted with nearly identical R/C flight electronics, and accept the same autopilot and imaging system payload as the \emph{Daedalus}.
 
-\newpage
+
 \subsection{Airframe}
 
 \subsubsection{Daedalus}
+
+Louis Stumpf, a member of our local R/C club, donated a 10ft 1in (3.07m) wingspan, 7ft 8in (2.33m) long, high wing trainer to our club. It met all of the requirements outlined previously.
+
+The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flight-worthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered,  the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 4lbs electronics payload, would bring the maximum takeoff weight to 25lbs.
 \begin{wrapfigure}{l}{0.5\textwidth}
 	\includegraphics[width=0.47\textwidth]{../images/daedalus_isometric.jpg}
 	\caption{The \emph{Daedalus}}
 	\label{fig:daedalus}
 \end{wrapfigure}
-Louis Stumpf, a member of our local R/C club, donated a 10ft 1in (3.07m) wingspan, 7ft 8in (2.33m) long, high wing trainer to our club. It met all of the requirements outlined previously.
-
-The plane, first built out of foam and balsa from long-lost plans in 1986, was accepted graciously, but required quite a bit of work before it was once again flight-worthy. We removed the covering to find water damage and rot which resulted from years of storage. We stripped and rebuilt nearly the entire airframe, adding carbon-fiber reinforcements to the wing in anticipation of increased wing loading due to our payload. Once rebuilt and covered,  the \emph{Daedalus} weighed 19.5 lbs with engine. A full 24oz fuel tank, plus 4lbs electronics payload, would bring the maximum takeoff weight to 25lbs.
-
 We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
 We designed a test to mimic the 
 Federal Airworthiness Standards' structural requirements\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a \degrees{7.5} dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. acceleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ acceleration, with a safety factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
@@ -181,17 +181,16 @@ Satisfied, we made engine and surface tests (see \ref{sec:appendix_preflight}) b
 
 
 \subsubsection{Knight Two}
-\begin{wrapfigure}{r}{0.4\textwidth}
+\begin{figure}
 	\centering
 	\subfloat[The unfinished \emph{Knight Two}]{\label{fig:knighttwo_construction} 
 			\includegraphics[width=0.37\textwidth]{../images/knighttwo_uncovered_outdoors.jpg}}
-\\
 	\subfloat[A completed 12 Foot Telemaster. Photo Credit: Hobby Lobby] {\label{fig:knighttwo_12ft_telemaster} 
 			\includegraphics[width=0.37\textwidth]{../images/telemaster_12ft_hobbylobby.jpg}}
   	\label{fig:knighttwo}
   	\caption[Knight Two]{Knight Two}
 
-\end{wrapfigure}
+\end{figure}
 
 In order to mitigate a disaster such as we had last year, we decided to build another airframe which could replace the \emph{Daedalus} at short notice. We selected an Aero-Design 12 Foot Telemaster \cite{aerodesign} because it was available as a balsa kit and similar in size to the \emph{Daedalus}. The 12 Foot Telemaster has a 12ft 1in (3.68m) wingspan, and is 7ft 10in (2.38m) in length.We named it the \emph{Knight Two} after the Rutgers University mascot, the Scarlet Knight.
 
@@ -208,12 +207,11 @@ Each airframe has a 45cc gasoline engine and 24 ounce gasoline tank. Based on ou
 
 Each airframe has nearly identical flight electronics. To power a Futaba 2.4GHz receiver and 6 servos for a 20 minute flight, we selected a 2 cell (7.2v) 3.2 amp hour Lithium Ion battery with a 5v, 10A capacity switching regulator made by Castle Creations. We use a low voltage monitor in-line with the battery, which beeps when cell voltage falls below 7.2v. The autopilot electronics are powered from a completely separate battery for safety reasons.
 
-\newpage
 \section{Autopilot}
 Our entry uses an autopilot system based off the open source Paparazzi project \cite{paparazziweb}. We ported the airborne code to Linux in order to use a single computer for all of our flight hardware and software.
 
 \subsection{Hardware}
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{../images/hardware_conn_diagram.pdf}
 	\caption{Hardware connection diagram for the autopilot and imaging systems. Only one of the 9 axis AHRS and Thermopile Attitude Sensor are used.}
@@ -234,7 +232,7 @@ A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is abl
 
 Early in the school year, we built a thermopile-based attitude (pitch and roll) sensor very similar to the sensor design used by the Paparazzi Tiny autopilot. Accompanied by a driver which allowed it to appear to the airborne software just as it would on the Tiny, this simple analog sensor helped us prototype and test the Paparazzi system. Having built a superior sensor, we keep it as a backup. It is detailed in Figure \ref{fig:hardware_conn_diagram} although we do not intend to use it for the competition.
 
-Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer. \cite{lsm303dlh}
+Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}.
 
 
 \subsubsection{Other Components}
@@ -340,7 +338,7 @@ The camera and tilt servo assembley is attached to the aircraft on a rotating mo
 The total height of the imaging system is 6.75", a maximum 2" of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and fits inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide hass been added to keep the wires from tangling.
 
 The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular acceleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.  The endpoints of the tilt rotation rang are calibrated and enforced in software, because pushing the camera outside this range may damage it.
-\newpage
+
 \subsection{Obtaining Images}
 
 The entire imaging system is controlled by the ``Image Station Operator''.  They view a live video stream coming from the camera on the plane, which is transmitted over a high bandwidth radio.  The operator can also control the camera by sending commands to the plane over the XBee radio link.  In order to assist the operator in finding targets, a target locating algorithm will be run on the video feed to highlight possible targets.  At the time of writing work is in progress on this feature, and it is being implemented using the OpenCV library \cite{opencv} with contour detection and polygonal mapping functions.
