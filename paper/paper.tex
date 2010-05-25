@@ -172,7 +172,7 @@ Federal Airworthiness Standards' structural requirements\footnote{Special Federa
 	\caption{Load testing the underside of the \emph{Daedalus}'s wings. Shown with 16lbs of load.}
 	\label{fig:sandbagtest}
 \end{wrapfigure}
-The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symmetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus}'s wings supported 64 lbs under static loading. This is 260\% of the maximum take off weight, the force of a 1.5$g$ accelleration multiplied by a 1.73 safety factor.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
+The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symmetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus}'s wings supported 64 lbs under static loading. This is 260\% of the maximum take off weight, the force of a 1.5$g$ acceleration multiplied by a 1.73 safety factor.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
 
 A second test was designed to certify the wing could take a top loading present from a 1.5$g$ acceleration with a safety factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane \degrees{10} side to side to simulate uneven loading. Our post-test structure inspection once again found no warped members or cracked joints.
 
@@ -222,37 +222,46 @@ Our entry uses an autopilot system based off the open source Paparazzi project \
 We selected the Beagleboard \cite{beagleboard}, a single board computer made by Texas Instruments. It features a 500MHz ARM Cortex A8 processor and 256MB ram. We installed Angstrom Linux \cite{angstromlinux} on an 8GB SD card. The Beagleboard has a few logic level serial, parallel, and general purpose IO interfaces on board, but for simplicity we chose to attach all of the devices through the USB bus. The Beagleboard provides one USB host port for this purpose, but the power supply can only sustain a low current draw. To provide more current to the attached devices, we use a Belkin 7-port powered USB hub \cite{belkin7usbhub}. With a proper power supply, the USB hub will provide up to 500mA to each port on the 5v/GND circuit.
 
 \subsubsection{Servo Subsystem}
-We are using Pololu Micro Maestro \cite{micromaestro}, which communicates with the flight computer over USB and features 6 Servo PWM outputs. On Linux, the Micro Maestro enumerates as a \texttt{ttyACM} device. A simple serial protocol is used to update the servo PWM outputs. The Micro Maestro also features a configurable timeout and failsafe position for the servo PWM outputs. We have configured the device to bring each servo to a predefined positon (throttle closed, elevator up, rudder right, ailerons left) after a 2 second new command timeout. This ensures that if the autopilot process or entire flight computer fails to respond for 2 seconds, the aircraft will enter this mode until the safety pilot takes control.
+We are using Pololu Micro Maestro \cite{micromaestro}, which communicates with the flight computer over USB and features 6 Servo PWM outputs. On Linux, the Micro Maestro enumerates as a \texttt{ttyACM} device. A simple serial protocol is used to update the servo PWM outputs. The Micro Maestro also features a configurable timeout and failsafe position for the servo PWM outputs. We have configured the device to bring each servo to a predefined position (throttle closed, elevator up, rudder right, ailerons left) after a 2 second new command timeout. This ensures that if the autopilot process or entire flight computer fails to respond for 2 seconds, the aircraft will enter this mode until the safety pilot takes control.
 
 A Futaba 2.4GHz ``FAAST'' 6-channel radio transmitter and receiver \cite{futaba24} is the safety radio for our entry. We've tested the radio in the presence of our other 2.4GHz radios (Wifi adapter, autopilot radio, and imaging system radio) at a variety of ranges and configurations, and are confident that any radio interference is not harmful to the response of the servo outputs.
 
 A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is able to select whether the signals from the Futaba radio control receiver or the autopilot are in control of the servos. The four control channels (throttle, elevator, rudder, ailerons) are routed from both the Futaba receiver and Micro Maestro to the Master and Slave inputs, respectively, on the multiplexer. The multiplexer and servos are powered by the Futaba receiver, which has an independent power supply from the flight computer. As long as the Futaba receiver has power and signal from the radio control transmitter, the safety pilot will be able to take control of the aircraft.
 
 \subsubsection{Attitude and Heading Reference Sensor}
-
+\begin{wrapfigure}{l}{0.3\textwidth}
+	\centering
+	\rotatebox{-90}{
+		\includegraphics[width=0.37\textwidth]{../images/ahrs_sensor_top.jpg}
+	}
+	\caption{Completed AHRS sensor}
+	\label{fig:ahrs_picture}
+\end{wrapfigure}
 Early in the school year, we built a thermopile-based attitude (pitch and roll) sensor very similar to the sensor design used by the Paparazzi Tiny autopilot. Accompanied by a driver which allowed it to appear to the airborne software just as it would on the Tiny, this simple analog sensor helped us prototype and test the Paparazzi system. Having built a superior sensor, we keep it as a backup. It is detailed in Figure \ref{fig:hardware_conn_diagram} although we do not intend to use it for the competition.
 
-Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}.
+Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}. Both the ITG-3200 and LSM303DLH have an all digital interface, and communicate with a microcontroller on a single I2C \cite{i2c} serial bus. Samples of all 9 axes (three each of gyro, accelerometer, and magnetometer) are taken and sent to the flight computer at 40Hz.
 
+The two sensors and an AVR microcontroller, mounted on breakout boards, were hooked up using simple 0.1" pitch protoboard, as shown in Figure \ref{fig:ahrs_picture}. The sensor board is powered by the Sparkfun FTDI serial to USB adapter \cite{sparkfun_ftdi} the microcontroller uses to communicate with the flight computer.
 
 \subsubsection{Other Components}
 \begin{itemize}
 	\setlength{\itemsep}{0cm}
 	\setlength{\parskip}{0cm}
-	\item GPS: We selected the GS407 \cite{gs407gps}, a uBlox LEA-5H \cite{ublox_lea5h} based GPS with an active helical antenna. We picked the unit because the uBlox chipset has been used successfully with Paparazzi in the past, and provides an internal Kalman filter mode for aircraft expecting accellerations of $\pm2g$. The GPS is powered and connected to the USB hub with a Sparkfun FTDI adapter \cite{sparkfun_ftdi}. 
-	\item Autopilot Radio: We selected a Maxstream XBee Pro (Series 2.5) 2.4GHz 50mW \cite{xbeepro24} radio system for the autopilot telemetry and uplink radio. It operates at the relatively slow baud rate of 19200bps. We selected this system because it is known to work well with the Paparazzi system, and it can provide a seamless point-to-point UART pipe with two transcievers. Importantly, it deals well with interference from other 2.4GHz radio connections nearby, including other XBee Pro radios, the Futaba ``FAAST'' radio control signal, and 2.4GHz 802.11g Wifi.
+	\item GPS: We selected the GS407 \cite{gs407gps}, a uBlox LEA-5H \cite{ublox_lea5h} based GPS with an active helical antenna. We picked the unit because the uBlox chipset has been used successfully with Paparazzi in the past, and provides an internal Kalman filter mode for aircraft expecting accelerations of $\pm2g$. The GPS is powered and connected to the USB hub with a Sparkfun FTDI serial to USB adapter \cite{sparkfun_ftdi}. 
+	\item Autopilot Radio: We selected a Maxstream XBee Pro (Series 2.5) 2.4GHz 50mW \cite{xbeepro24} radio system for the autopilot telemetry and uplink radio. It operates at the relatively slow baud rate of 19200bps. We selected this system because it is known to work well with the Paparazzi system, and it can provide a seamless point-to-point UART pipe with two transceivers. Importantly, it deals well with interference from other 2.4GHz radio connections nearby, including other XBee Pro radios, the Futaba ``FAAST'' radio control signal, and 2.4GHz 802.11g Wifi.
 	\item Imaging Radio: We are using an identical pair of XBee Pro radios in a point-to-point 115200bps UART connection configuration to connect the imaging system to the ground. We have tested and found that, when operating two point-to-point connections at once, neither suffers measurably at up to 1/3 mile line of sight range. Therefore, rather than write complicated software to use both the autopilot serial communication protocol and the imaging radio serial communication protocol with the same XBee radio, we use two radio connections on the same band with little penalty. 
-	\item Wifi Adapter: We use a 802.11g (wifi) adapter for convenience in the lab and at the field to program the flight computer and supervise the execution of autopilot proceses. The reliability of our wifi connection drops off significantly beyond 600ft (200m), so we do not actively use the link during flight or for any telemetry.
+	\item Wifi Adapter: We use a 802.11g (wifi) adapter for convenience in the lab and at the field to program the flight computer and supervise the execution of autopilot process. The reliability of our wifi connection drops off significantly beyond 600ft (200m), so we do not actively use the link during flight or for any telemetry.
 \end{itemize}
 \subsubsection{Power}
 Both the Beagleboard and the powered USB hub are provided with 5VDC via a switching regulator and a 3 cell (11.1v nominal) 1.5Ah Lithium Polymer battery. This provides, on average, 90 minutes of operation with all devices on.
 
 
-\subsection{Software}
+\subsection{Autopilot Software}
 \label{sec:autopilot_software}
-didn't want to be your ghost, didn't want to be anyone's ghost, didn't want to be your ghost, didn't want to be anyone's ghost
 
-but i don't want anyone else
+The autopilot software is a port of the Paparazzi airborne software to Linux. The airborne software is written in C and originally assumed a bare-metal (that is, no operating system) 
+
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{../images/software_comm_diagram.pdf}
@@ -285,7 +294,7 @@ To obtain images of targets in flight we have created an Imaging System capable 
 	\label{fig:camera}
 \end{figure}
 
-We selected the Sony MHS-PM5 camera as the basis of our imaging system. Marketed as a pocket 1080i video camera capable of 5 megapixel still images, we primarily selected the camera because it features a swiveling lens at one end of the body and it features Sony's LANC (Local Application Control Bus System) \cite{lanc}. Because of the swiveling lens we were able to achieve two rotational degrees of freedom while only rotating the body of the camera about one axis.  This greatly simiplified the pan-tilt design, and also allowed us to easily mount the camera primarily inside the fuselage of the aircraft, which protects it from damage during takeoff and landing, and reduces drag on the airframe. 
+We selected the Sony MHS-PM5 camera as the basis of our imaging system. Marketed as a pocket 1080i video camera capable of 5 megapixel still images, we primarily selected the camera because it features a swiveling lens at one end of the body and it features Sony's LANC (Local Application Control Bus System) \cite{lanc}. Because of the swiveling lens we were able to achieve two rotational degrees of freedom while only rotating the body of the camera about one axis.  This greatly simplified the pan-tilt design, and also allowed us to easily mount the camera primarily inside the fuselage of the aircraft, which protects it from damage during takeoff and landing, and reduces drag on the airframe. 
 
 The LANC protocol is based on a 9600 baud UART serial connection, and is available on the PM5's 10-pin ``Multi-AV'' connector. Camera control commands, which include commands to zoom in, zoom out, and take a still picture, are publicly documented.  Also on the ``Multi-AV'' connector are the signals for NTSC video and audio output. We use both the NTSC output and LANC signals on this connector using a LANC Adapter cable \cite{lanc_adapter}.
 
@@ -333,7 +342,7 @@ Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  T
 In order to meet the target imaging requirments we needed to add both pan and tilt actuators to the camera. The field of view of our lens is only \degrees{45} by \degrees{34}, which is not enough to meet the competition field of view requirements of \degrees{60} vision in each direction.  To address this issue, we designed a pan tilt unit which makes it possible to image the entire hemisphere below the fuselage of the aircraft.
 
 We took advantage of the MHS-PM5's swiveling lens assembly (see Figure \ref{fig:camera_frontview}, and added a servo actuator which can rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \cite{hitechs77bb}, and is capable of \degrees{180} rotation. Figures \ref{fig:pantilt} and \ref{fig:pantilt_linkdetail} show the camera lens tilted at \degrees{45} below the horizon.
-The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \cite{hitechs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Pan-tilt control board.
+The camera and tilt servo assembly is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \cite{hitechs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Pan-tilt control board.
 
 The total height of the imaging system is 6.75", a maximum 2" of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and fits inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide hass been added to keep the wires from tangling.
 
