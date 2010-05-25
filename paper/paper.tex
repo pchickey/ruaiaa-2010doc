@@ -128,19 +128,17 @@ We had sketched plans for an electronics system built entirely on a Linux-based 
 
 \subsubsection{Autopilot System Engineering}
 
-We felt the Paparazzi system was full featured and proven, but we weren't satisified with the capabilities of the existing Paparazzi hardware. The ``Tiny'' v2.1\cite{paparazzi_tinyv21}, the latest autopilot hardware released by the Paparazzi project, is based on a 64 pin ARM microcontroller. Almost all of its input-output capabilities are dedicated to autopilot functions, making it difficult to expand functionality 
+We felt the Paparazzi system was full featured and proven, but we weren't satisified with the capabilities of the existing Paparazzi hardware. The ``Tiny'' v2.1\cite{paparazzi_tinyv21}, the latest autopilot hardware released by the Paparazzi project, is based on a 64 pin ARM microcontroller. Almost all of its input-output capabilities are dedicated to autopilot functions, making it difficult to expand functionality and share information (for instance, position and orientation estimates) with payload components. As previously stated, the Tiny is expensive, fragile\footnote{In our own admittedly clumsy experience} and often subject to long lead times. 
 
- The first task was to select hardware which would allow us to port the airborne code from the Paparazzi's standard microcontroller-based autopilot hardware to our flight computer.
+In order to replace the functionality of the Tiny with a flight computer, we needed to select hardware which could provide the flight control software with information from the attitude sensor, GPS module, and long distance telemetry radio link. We also needed a servo output interface. The most important feature provided by the Tiny was the real-time processing and multiplexing of the safety pilot's radio control signals with the autopilot control signals. The flight computer's servo output hardware must manage this multiplexing functionality in a way that is not tied to the function of the flight computer itself. 
 
 \subsubsection{Safety of Linux Based Flight Computer}
 
-We acknowledge that a Linux based flight computer does not support the requirements for hard real-time, deterministic computing that would be required of any real-world autonomous system. Given the resources available to the team (time, money, and manpower), such a fully assured system is out of reach. 
+We acknowledge that a Linux based flight computer does not support the requirements for hard real-time, deterministic computing that would be required of any real-world autonomous system. Given the resources available to the team (time, money, and manpower), such a fully assured system is out of reach.
 
 We elected to take many steps in the software engineering to help ensure our flight computer will operate reliably. The most important of these was code review and incremental testing. Both Pat Hickey and Bradley Lord became intimately familiar with the source code and control flow inside the autopilot software, and all patches were reviewed and tested by both engineers. Numerous other safety measures will be described in Section \ref{sec:autopilot_software}.
 
-Because our entry is essentially an experimental system, and will always be operated with a safety pilot present, we engineered the safety pilot override to operate independently from the flight computer. We have ensured that, short of losing power to the radio control receiver and servos, the safety pilot will always be able to take over at a moment's notice. We have also ensured that the flight computer's servo controller will be able to detect a loss of computer control and servos to a recoverable default. Along with careful preflight testing, careful observation, and definitive analysis of any errors encountered during flight, these measures meet the spirit and letter of competition rules.
-
-
+Because our entry is essentially an experimental system, and will always be operated with a safety pilot present, we engineered the safety pilot override to operate independently from the flight computer. We have ensured that, short of losing power to the radio control receiver and servos, the safety pilot will always be able to take over with the flick of a single switch on his radio control transmitter. We have also ensured that the flight computer's servo controller will be able to detect a loss of computer control and servos to a recoverable default. Along with careful preflight testing, careful observation, and definitive analysis of any errors encountered during flight, these measures meet the spirit and letter of competition rules.
 
 \subsubsection{Imaging System Engineering}
 
