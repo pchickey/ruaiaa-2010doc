@@ -213,27 +213,33 @@ Each airframe has nearly identical flight electronics. To power a Futaba 2.4GHz 
 Our entry uses an autopilot system based off the open source Paparazzi project \cite{paparazziweb}. We ported the airborne code to Linux in order to use a single computer for all of our flight hardware and software.
 
 \subsection{Hardware}
-\subsubsection{Single Board Computer}
-Beagleboard.
-
-\subsubsection{Other Components}
-\begin{itemize}
-	\setlength{\itemsep}{0cm}
-	\setlength{\parskip}{0cm}
-	\item GPS: 
-	\item Servo Controller:
-	\item Autopilot Radio:
-	\item Imaging Radio:
-	\item Wifi Adapter:
-	\item 
-\end{itemize}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{../images/hardware_conn_diagram.pdf}
 	\caption{Hardware connection diagram for the autopilot and imaging systems. Only one of the 9 axis AHRS and Thermopile Attitude Sensor are used.}
 	\label{fig:hardware_conn_diagram}
 \end{figure}
+
+\subsubsection{Single Board Computer}
+We selected the Beagleboard \cite{beagleboard}, a single board computer made by Texas Instruments. It features a 500MHz ARM Cortex A8 processor and 256MB ram. We installed Angstrom Linux \cite{angstromlinux} on an 8GB SD card. The Beagleboard has a few logic level serial, parallel, and general purpose IO interfaces on board, but for simplicity we chose to attach all of the devices through the USB bus. The Beagleboard provides one USB host port for this purpose, but the power supply can only sustain a low current draw. To provide more current to the attached devices, we use a Belkin 7-port powered USB hub \cite{belkin7usbhub}. With a proper power supply, the USB hub will provide up to 500mA to each port on the 5v/GND circuit.
+
+\subsubsection{Servo Subsystem}
+We are using Pololu Micro Maestro \cite{micromaestro}, which communicates with the flight computer over USB and features 6 Servo PWM outputs. On Linux, the Micro Maestro enumerates as a \texttt{ttyACM} device. A simple serial protocol is used to update the servo PWM outputs. The Micro Maestro also features a configurable timeout and failsafe position for the servo PWM outputs. We have configured the device to bring each servo to a predefined positon (throttle closed, elevator up, rudder right, ailerons left) after a 2 second new command timeout. This ensures that if the autopilot process or entire flight computer fails to respond for 2 seconds, the aircraft will enter this mode until the safety pilot takes control.
+
+The safety pilot is able to take control of the aircraft 
+
+\subsubsection{Other Components}
+\begin{itemize}
+	\setlength{\itemsep}{0cm}
+	\setlength{\parskip}{0cm}
+	\item GPS: We selected the GS407 \cite{gs407gps}, a uBlox LEA-5H \cite{ublox_lea5h} based GPS with an active helical antenna. We picked the unit because the uBlox chipset has been used successfully with Paparazzi in the past, and provides an internal Kalman filter mode for aircraft expecting accellerations of $\pm2g$. The GPS is powered and connected to the USB hub with a Sparkfun FTDI adapter \cite{sparkfun_ftdi}. 
+	\item Autopilot Radio:
+	\item Imaging Radio:
+	\item Wifi Adapter:
+\end{itemize}
+\subsubsection{Power}
+Both the Beagleboard and the powered USB hub are provided with 5VDC via a switching regulator and a 3 cell (11.1v nominal) 1.5Ah Lithium Polymer battery. This provides, on average, 90 minutes of operation with all devices on.
+
 
 \subsection{Software}
 \label{sec:autopilot_software}
@@ -243,7 +249,7 @@ but i don't want anyone else
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{../images/software_comm_diagram.pdf}
-	\caption{Communications diagram}	
+	\caption{Software communications diagram}	
 	\label{fig:software_comm_diagram}
 \end{figure}
 
@@ -251,12 +257,10 @@ but i don't want anyone else
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\includegraphics[width=0.37\textwidth]{../images/paparazzi_gcs.jpg}
-	\caption{Paparazzi GCS. Image Credit: Paparazzi Wiki\cite{}}
+	\caption{Paparazzi GCS. Image Credit: Paparazzi Wiki \cite{paparazziweb }}
 	\label{fig:paparazzi_gcs}
 \end{wrapfigure}
 Because we based our autopilot software on the Paparazzi project, we were able to make use of their excellent ground control software (GCS) with essentially no modifications. The Paparazzi GCS provides a map interface that allows the operator and competition judges to inspect the aircraft's position to ensure it is within the allowed airspace. It also provides attitude and altitude telemetry, and notification of lost radio contact, so the operator can alert the safety pilot to unsafe operation.
-
-
 
 \section{Imaging System}
 
