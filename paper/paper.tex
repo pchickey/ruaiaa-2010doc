@@ -123,16 +123,9 @@ Because our entry is essentially an experimental system, and will always be oper
 
 As stated previously, the Paparazzi system is the most capable and proven open-source autopilot system available. The first task was to select hardware which would allow us to port the airborne code from the Paparazzi's standard microcontroller-based autopilot hardware to our flight computer.
 
-\subsubsection{Payload System Engineering}
-% Cogan, please explain the overall design decisions here. These are one sentence points in not great english, maybe make these two sentences each. 
-We used an off the shelf consumer camera because small, cheap, capable .
-We needed a linux based computer to interface with camera - only viable option, if we don't use a prebuilt system.
-We used our own pantilt unit because we wanted it to custom fit our camera.
-and it turned out our camera choice heavily effected our pantilt design, and allowed us to have a very compact system.
- We used an independent radio link because we weren't sure about integration with the autopilot system, and we wanted to be able to switch the way the autopilot worked without dependencies.
-We wrote our own ground station software out of necessity, turned out to be excellent design decision.
+\subsubsection{Imaging System Engineering}
 
-
+When designing the imaging system our major goals were to have 1) a camera with XXX range of motion.  2) real-time video feed from the plane.  3) ability to control the camera in real-time and take pictures.  4) ability to download pictures while in flight.  For the camera we chose the Sony Bloggie \cite{bloggie} because it was small, light, cheap, and took high resolution images and video.  In addition it came with a built in rotating lens, which simplified the construcion of the pan-tilt unit, and it can also be controlled remotely over usb, so it interfaced with our flight linux computer.  To communicate with the plane we developed custom ground station software to meet our needs and installed two sets of radios, one for the video feed, and another for communicating with the plane and downloading images.  These radios are independent from the set of radios used for the autopilot because we didn't want to have dependencies between the two systems.
 
 \section{Flight Vehicle}
 
@@ -256,26 +249,22 @@ The LANC protocol is based on a 9600 baud UART serial connection, and is availab
 % first citation should go to http://www.boehmel.de/lanc.htm
 
 The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen. 
-Still pictures are taken based on targets spotted in this video feed. Those images are stored on the camera's memory card.
+Still pictures are taken based on targets spotted in this video feed and are stored on the camera's memory card.
+
+Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  To determine how the images will appear from different altitudes, we have a table that maps the size of features in the world to pixels in our images at different altitudes.  We also see how this mapping will be affected when the camera is pointed straight down compared to when it is tilted at a 45 degree angle.  We can see that at 100 ft. each pixel will represent a little over $1/3$ of an inch when looking straight down, which should be a sufficient level of detail to accurately identify any target.  However, at 500 ft. each pixel is 2 inches wide when looking straight down, which will lead to blurry images.  We are confident that this level of detail will be enough to identify the shapes and colors of all targets at any required altitude, but we may have some difficulty identifying alpha-numerics on very small targets at high altitudes.  As a first year team, we feel that this is an acceptable level of detail.
+
+\begin{tabular}{ccc}
+{\bf altitude (ft)} & {\bf pixel width at $0,^{\circ}$ (in)} & {\bf pixel width at $45,^{\circ}$ (in)} \\
+       100 &       0.38 &       0.54 \\
+       200 &       0.76 &       1.08 \\
+       300 &       1.14 &       1.62 \\
+       400 &       1.52 &       2.16 \\
+       500 &       1.90 &       2.69 \\
+\end{tabular}
 
 % please give details of still pictures, including the field of view per pixel. include a quick table of resolving power (projection of pixel field of view, center of frame, onto ground) at altitudes [100,200,300,400 agl] for straight down and 45 degree angle. Please also give the resolving power of the video viewfinder
 
-\subsection{Camera-Computer Interface}
-
-We access the still pictures on the memory card via the PM5's USB connector. When attached to a computer, the PM5 powers the camera off and appears as a USB Mass Storage Device. In order to use the PM5 as both a camera and Mass Storage Device in flight, we have spliced a transistor into the power line on the USB cable. We control whether the camera detects it is connected via USB by blocking or allowing current in that line. 
-
-% cogan, please finish up this section. Some of the information may be redundant.
-% we also need a figure of this system, labeling all the components and connections.
-
-% from michael varga:
-%Overview of Ground Station Commands
-%Some of the commands that the ground station can issue to the plane are capture image, zoom in, zoom out, crop image, download crop, generate crop, pan left, pan right, tilt up and tilt down. These commands are initiate by a simple button press on the ground station gui program. The ground station sends a signal to the plane computer through a radio. The plane software then handles the command directly or may forward it on to the microcontroller. The capture image, pan and tilt commands are forwarded onto the microcontroller as they involve the lanc interface with the camera and the servos. The download crop and generate crop commands are handled directly by the computer since the data necessary to carry out these functions exists on its hard drive..
-%Target Verification
-%A live video feed is forwarded from the camera through a ntsc video transmitter. The ground station laptop contains a ntsc video receiver so it may be displayed on the screen. When the operator sees a target in the view of the camera he issues a command to the plane to capture an image of the camera’s current view. These images will be stored on the plane and ready for download when instructed by the ground station operator.
-%The original full resolution images are too large to be downloaded directly.  A lower resolution picture is generated for every high resolution image that is captured. The ground station operator must download and look at the thumbnail to select a rectangular region that encompasses the target. A command is issued to the plane that generates a crop from the original higher resolution image using the selected rectangular region. The ground station operator may then download this newly generated crop to verify the target with more precision.
-
 \subsection{Pan Tilt Unit}
-
 
 \begin{figure}
 	\centering
@@ -319,14 +308,42 @@ The entire imaging system is controlled by the ``Image Station Operator''.  They
   	\label{fig:imagestationcontrols}
 \end{figure}
 
-When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board), and then downloaded to the Image Station over the XBee connection.
+When a picture is taken on the plane it is immediately saved on the camera's memory card.  In order to view that picture on the ground it must first be transferred to the plane's main computer (beagle board).  This is done via the PM5's USB connector.  When attached to a computer, the PM5 powers the camera off and appears as a USB Mass Storage Device. In order to use the PM5 as both a camera and Mass Storage Device in flight, we have spliced a transistor into the power line on the USB cable. This controls whether the camera detects it is connected via USB by blocking or allowing current in that line.
 
 \subsection{Downloading Images in Real Time}
 
-Once images are on the plane's computer they are ready to be downloaded over a 2.4GHz XBee radio link.  Each image is fairly large, and our bandwidth is only around 115200 baud % actually throughput, at worst-case, is half this.
-, so we select only the most important part of the images to download. The entire image is first downloaded as a low-res `thumbnail.'  Once that is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  This allows us to quickly obtain high resolution images of the targets of interest.
+Once images are on the plane's computer they are ready to be downloaded over a 2.4GHz XBee radio link.  Each picture taken by the camera is about 500KB in size, while our theoretical maximum throughput is only 115200 baud (and only about half of that in practice).  Each full image takes about a minute to download, so we created a method to speed up the process.  The entire image is first downloaded as an 800x600 resolution `thumbnail.'  Once the thumbnail is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  Downloading both the crop and the thumbnail generally takes under 30 seconds, less than half the time of downloading the full image, allowing us to quickly obtain high resolution images of the targets of interest.
 
-% Please state the sizes of the thumbnail and cropped images, compared to the total image size, and state the average download times of each, in a table. this will make our improvements dramatic.
+\begin{tabular}{rrr}
+ & {\bf Size (KB)} & {\bf Download Time (s)} \\
+ {\bf Original Image} &        500 &       69.4 \\
+ {\bf Thumbnail} &        125 &       17.4 \\
+ {\bf Crop} &         25 &        3.5 \\
+\end{tabular}
+
+Below a diagram is included that shows the entire flow of events from start to finish in our Imaging System for capturing an image and then downloading it.
+
+\begin{figure} [H]
+  \centering
+  	\includegraphics[width=0.9\textwidth]{../images/CaptureProcess.jpg}
+  	\caption[Image Capture Process]{Flow of events for capturing an image}
+  	\label{fig:imagecaptureprocess}
+\end{figure}
+
+\begin{enumerate}
+\item Command to take a picture is sent to Plane from Image Station
+\item Plane sends command to camera, picture is taken and acknowledgement is sent to Image Station
+\item Operator issues command to make images available for download
+\item Plane acknowledges request and begins transfer of images from internal camera memory to the BeagleBoard.  Sends notification when transfer is complete.
+\item Newly available image(s) are automatically put on a queue to be downloaded.
+\item A request to download a 250 byte chunk of the image at the top of the queue is sent to the plane.
+\item The plane sends down the requested chunk of image.
+\item Steps 6-7 are repeated throughout the duration of the flight.  These image downloading commands are low priority and will only be sent if there are no other commands to be executed, This allows for high priority commands like taking a picture or moving the camera to be executed at any time.
+\end{enumerate}
+
+\subsection{Identifying target characteristics}
+
+When an image has been fully downloaded to the ground targets can be identified and tagged with metadata.  Information about the plane's orientation, gps coordinates, altitude, yaw/pitch/roll, and pan/tilt of the camera are sent down with the image.  Using this information the GPS location of the target can be determined using the intrinsic properties of the camera and some basic trigonometry. Target shape, color, alphanumeric, alphanumeric color, and orientation are all entered manually by the operator.
 
 \begin{figure} [h]
   \centering
@@ -334,10 +351,6 @@ Once images are on the plane's computer they are ready to be downloaded over a 2
   	\caption[Image Station Interface]{The main interface for the Image Station.  All the images that have been taken are displayed on the top left.  The queue of images to download is on the bottom left.  On the right is the currently displayed image, with target information underneath.}
   	\label{fig:imagestationinterface}
 \end{figure}
-
-\subsection{Identifying target characteristics}
-
-When an image has been fully downloaded to the ground targets can be identified and tagged with metadata.  Information about the plane's orientation, gps coordinates, altitude, yaw/pitch/roll, and pan/tilt of the camera are sent down with the image.  Using this information the GPS location of the target can be determined using the intrinsic properties of the camera and some basic trigonometry. Target shape, color, alphanumeric, alphanumeric color, and orientation are all entered manually by the operator.
 
 \section{Operation Safety}
 
