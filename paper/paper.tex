@@ -340,9 +340,9 @@ The pan servo is calibrated before installation by mapping servo PWM inputs to a
 
 The entire imaging system is controlled by the ``Image Station Operator''.  They view a live video stream coming from the camera on the plane, which is transmitted over a high bandwidth radio.  The operator can also control the camera by sending commands to the plane over the XBee radio link.  In order to assist the operator in finding targets, a target locating algorithm will be run on the video feed to highlight possible targets.  At the time of writing work is in progress on this feature, and it is being implemented using the OpenCV library \cite{opencv} with contour detection and polygonal mapping functions.
 
-\begin{figure} [H]
+\begin{figure}
   \centering
-  	\includegraphics[width=0.9\textwidth]{../images/ImageStationControls.jpg}
+  	\includegraphics[width=0.5\textwidth]{../images/ImageStationControls.jpg}
   	\caption[Image Station Control Panel]{The Control Panel for the Image Station.  Above is a live video feed from the plane.  Below are controls to adjust the pan/tilt of the unit, zoom in/out, take a picture, and reset the camera to a neutral position.}
   	\label{fig:imagestationcontrols}
 \end{figure}
