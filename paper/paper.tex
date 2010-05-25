@@ -1,4 +1,4 @@
-\documentclass[10pt,twocolumns]{report}
+\documentclass[10pt]{report}
 \usepackage[pdftex]{graphicx}
 \usepackage[left=1.5in, right=1.5in, top=1.25in, bottom=1.25in]{geometry}
 \usepackage{hyperref}
@@ -235,16 +235,25 @@ We needed to interface with the following hardware components:
 Interfacing with such a large array of devices meant we had to use a ...
 
 \subsection{Hardware}
-Single board computer: beagleboard.
-
+Description of components selected.
 Description of each input, output interface.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{../images/hardware_conn_diagram.pdf}
+	\caption{Hardware connection diagram for the autopilot and imaging systems. Only one of the 9 axis AHRS and Thermopile Attitude Sensor are used.}
+	\label{fig:hardware_conn_diagram}
+\end{figure}
 
-Figure goes here: Hardware connection diagram. PAT
 \subsection{Software}
 \label{sec:autopilot_software}
-PAT
 
-Figure goes here: interprocess communication. PAT
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{../images/software_comm_diagram.pdf}
+	\caption{Communications diagram}	
+	\label{fig:software_comm_diagram}
+\end{figure}
+
 \subsection{Ground Station}
 Because we based our autopilot software on the Paparazzi project, we were able to make use of their excellent ground control software (GCS) with essentially no modifications.
 
@@ -278,10 +287,10 @@ The LANC protocol is based on a 9600 baud UART serial connection, and is availab
 The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen. 
 Still pictures are taken based on targets spotted in this video feed and are stored on the camera's memory card.
 
-Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  To determine how the images will appear from different altitudes, we have a table that maps the size of features in the world to pixels in our images at different altitudes.  We also see how this mapping will be affected when the camera is pointed straight down compared to when it is tilted at a 45 degree angle.  We can see that at 100 ft. each pixel will represent a little over $1/3$ of an inch when looking straight down, which should be a sufficient level of detail to accurately identify any target.  However, at 500 ft. each pixel is 2 inches wide when looking straight down, which will lead to blurry images.  We are confident that this level of detail will be enough to identify the shapes and colors of all targets at any required altitude, but we may have some difficulty identifying alpha-numerics on very small targets at high altitudes.  As a first year team, we feel that this is an acceptable level of detail.
+Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  To determine how the images will appear from different altitudes, we have a table that maps the size of features in the world to pixels in our images at different altitudes.  We also see how this mapping will be affected when the camera is pointed straight down compared to when it is tilted at a 45 degree angle.  We can see that at 100 ft. each pixel will represent a little over $1/3$ of an inch when looking straight down, which should be a sufficient level of detail to accurately identify any target.  However, at 500 ft. each pixel is 2 inches wide when looking straight down, which will lead to blurry images.  We are confident that this level of detail will be enough to identify the shapes and colors of all targets at any required altitude, but we may have some difficulty identifying alpha-numerics on very small targets at high altitudes.  As a first year team, we feel that meeting the ``threshold'' rather than the ``objective'' goals, at the edge of the altitude envelope, is an acceptable level of performance.
 
 \begin{tabular}{ccc}
-{\bf altitude (ft)} & {\bf pixel width at $0,^{\circ}$ (in)} & {\bf pixel width at $45,^{\circ}$ (in)} \\
+\\{\bf altitude (ft)} & {\bf pixel width at $0,^{\circ}$ (in)} & {\bf pixel width at $45,^{\circ}$ (in)} \\
        100 &       0.38 &       0.54 \\
        200 &       0.76 &       1.08 \\
        300 &       1.14 &       1.62 \\
@@ -296,10 +305,12 @@ Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  T
 \begin{figure}
 	\centering
 	\subfloat[Isometric View]{\label{fig:pantilt_isometric} 
-			\includegraphics[width=0.75\textwidth]{../images/pantilt_isometric.png}}
-\\
+			\includegraphics[width=0.45\textwidth]{../images/pantilt_isometric.png}}
 	\subfloat[Side View.]{\label{fig:pantilt_side} 
-			\includegraphics[width=0.75\textwidth]{../images/pantilt_side.png}}
+			\includegraphics[width=0.45\textwidth]{../images/pantilt_side.png}}
+\\
+	\subfloat[Photograph of pan tilt unit installed in \emph{Daedalus}]{\label{fig:pantilt_photo}
+			\includegraphics[width=0.75\textwidth]{../images/pantilt_photo1.jpg}}
 	\caption{Pan Tilt Unit}
 	\label{fig:pantilt}
 \end{figure}
