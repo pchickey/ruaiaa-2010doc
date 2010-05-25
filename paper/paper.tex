@@ -154,8 +154,8 @@ We have also nearly completed a very similar backup airframe which will serve as
 \subsection{Airframe}
 
 \subsubsection{Daedalus}
-\begin{wrapfigure}{l}{0.4\textwidth}
-	\includegraphics[width=0.37\textwidth]{../images/daedalus_isometric.jpg}
+\begin{wrapfigure}{l}{0.5\textwidth}
+	\includegraphics[width=0.47\textwidth]{../images/daedalus_isometric.jpg}
 	\caption{The \emph{Daedalus}}
 	\label{fig:daedalus}
 \end{wrapfigure}
@@ -231,6 +231,11 @@ A Futaba 2.4GHz ``FAAST'' 6-channel radio transmitter and receiver \cite{futaba2
 A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is able to select whether the signals from the Futaba radio control receiver or the autopilot are in control of the servos. The four control channels (throttle, elevator, rudder, ailerons) are routed from both the Futaba receiver and Micro Maestro to the Master and Slave inputs, respectively, on the multiplexer. The multiplexer and servos are powered by the Futaba receiver, which has an independent power supply from the flight computer. As long as the Futaba receiver has power and signal from the radio control transmitter, the safety pilot will be able to take control of the aircraft.
 
 \subsubsection{Attitude and Heading Reference Sensor}
+
+Early in the school year, we built a thermopile-based attitude (pitch and roll) sensor very similar to the sensor design used by the Paparazzi Tiny autopilot. Accompanied by a driver which allowed it to appear to the airborne software just as it would on the Tiny, this simple analog sensor helped us prototype and test the Paparazzi system. Having built a superior sensor, we keep it as a backup. It is detailed in Figure \ref{fig:hardware_conn_diagram} although we do not intend to use it for the competition.
+
+Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer. \cite{lsm303dlh}
+
 
 \subsubsection{Other Components}
 \begin{itemize}
@@ -314,7 +319,7 @@ Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  T
 			\includegraphics[width=0.45\textwidth]{../images/pantilt_side.png}}
 \\
 	\subfloat[Photograph of pan tilt unit installed in \emph{Daedalus}]{\label{fig:pantilt_photo}
-			\includegraphics[width=0.75\textwidth]{../images/pantilt_photo1.jpg}}
+			\includegraphics[width=0.55\textwidth]{../images/pantilt_photo1.jpg}}
 	\caption{Pan Tilt Unit}
 	\label{fig:pantilt}
 \end{figure}
