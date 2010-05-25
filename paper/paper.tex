@@ -36,7 +36,7 @@
 %If we're really close to the page limit, we may be able to omit it.
 %\end{abstract}
 
-\section{Introduction}
+\section{Introduction TWO}
 
 The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal of entering the 2009 Association for Unmanned Vehicle Systems International (AUVSI)\cite{auvsiweb} Unmanned Air Systems (UAS) competition\cite{uasweb}. We didn't make it to the 2009 competition after losing our aircraft only four weeks before. Our imaging system and autopilot system were also far from ready. In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
 
@@ -210,12 +210,10 @@ Each airframe has a 45cc gasoline engine and 24 ounce gasoline tank. Based on ou
 
 \subsubsection{Batteries}
 
-Each airframe has nearly identical flight electronics. To power a Futaba 2.4GHz receiver and 6 servos for a 20 minute flight, we selected a 2 cell (7.2v) 3.2 amp hour Lithium Ion battery with a 5v, 10A capacity switching regulator made by Castle Creations. We use a low voltage monitor in-line with the battery, which beeps when cell voltage falls below 7.2v. The autopilot electronics are powered off a completely separate battery for safety.
+Each airframe has nearly identical flight electronics. To power a Futaba 2.4GHz receiver and 6 servos for a 20 minute flight, we selected a 2 cell (7.2v) 3.2 amp hour Lithium Ion battery with a 5v, 10A capacity switching regulator made by Castle Creations. We use a low voltage monitor in-line with the battery, which beeps when cell voltage falls below 7.2v. The autopilot electronics are powered from a completely separate battery for safety reasons.
 
 \section{Autopilot}
-Our entry uses an autopilot system based off the open source 
-Paparazzi project\cite{paparazziweb}. 
-We ported the airborne code to Linux in order to use a single computer for all of our flight hardware and software.
+Our entry uses an autopilot system based off the open source Paparazzi project \cite{paparazziweb}. We ported the airborne code to Linux in order to use a single computer for all of our flight hardware and software.
 
 \subsection{Requirements}
 
@@ -265,7 +263,8 @@ PAT
 To obtain images of targets in flight we have created an Imaging System capable of meeting all the requirements of the competition.  The system consists of a pan-tilt camera on the plane, communication software on the plane, and our ``Image Station'' application running on a dedicated laptop.  The Image Station communicates with the plane in real time via two different sets of wireless radios.  Using the Image Station, the operator can view a live video stream from the plane, control the pan-tilt camera remotely, and download and manipulate images.
 
 \subsection{Camera}
-\begin{figure}
+
+\begin{figure} [h!]
 	\centering
 	\subfloat[Front View]{\label{fig:camera_frontview} 
 			\includegraphics[width=0.3\textwidth]{../images/camera_frontview.jpg}}
@@ -275,27 +274,27 @@ To obtain images of targets in flight we have created an Imaging System capable 
 	\label{fig:camera}
 \end{figure}
 
-We selected the Sony MHS-PM5 camera as the basis of our imaging system. Marketed as a pocket 1080i video camera capable of 5 megapixel (MP) still images, we primarily selected the camera because it features a swiveling lens at one end of the body and it features Sony's LANC (Local Application Control Bus System, ref{lanc}). Because the swiveling lens is at one end of the body, we can mount the camera primarily inside the fuselage of the aircraft, which will protect it from damage on takeoff and landing. Internal mounting also helps reduce drag. The swiveling lens is an important feature because it allows us to achieve two rotational degrees of freedom while only rotating the body about one axis. This simplifies the pan tilt unit design.
+We selected the Sony MHS-PM5 camera as the basis of our imaging system. Marketed as a pocket 1080i video camera capable of 5 megapixel still images, we primarily selected the camera because it features a swiveling lens at one end of the body and it features Sony's LANC (Local Application Control Bus System) \cite{lanc}. Because of the swiveling lens we were able to achieve two rotational degrees of freedom while only rotating the body of the camera about one axis.  This greatly simiplified the pan-tilt design, and also allowed us to easily mount the camera primarily inside the fuselage of the aircraft, which protects it from damage during takeoff and landing, and reduces drag on the airframe. 
 
-The LANC protocol is based on a 9600 baud UART serial connection, and is available on the PM5's 10-pin ``Multi-AV'' connector. Camera control commands, which include commands to zoom in, zoom out, and take a still picture, is publicly available \ref{boehmenl_lanc}. Also on the ``Multi-AV'' connector are the signals for NTSC video and audio output. We use both the NTSC output and LANC signals on this connector using a commercially available adapter cable \ref{lanc_multiav_cable}.
+The LANC protocol is based on a 9600 baud UART serial connection, and is available on the PM5's 10-pin ``Multi-AV'' connector. Camera control commands, which include commands to zoom in, zoom out, and take a still picture, are publicly documented.  Also on the ``Multi-AV'' connector are the signals for NTSC video and audio output. We use both the NTSC output and LANC signals on this connector using a LANC Adapter cable \cite{lanc_adapter}.
 
-% first citation should go to http://www.boehmel.de/lanc.htm
+The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen.  Still pictures are taken based on targets spotted in this video feed and are stored on the camera's memory card.
 
-The PM5's NTSC video signal outputs a 480 line video of the current ``viewfinder'', the live video that is also displayed on the rear LCD screen. 
-Still pictures are taken based on targets spotted in this video feed and are stored on the camera's memory card.
+Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  To determine how the images will appear from different altitudes, we have created a table that maps the size of features in the world to pixels in our images at different altitudes.  We also take into consideration the changes in distance to the ground when the camera is tilted at a \degrees(45) angle as opposed to vertically aligned with the plane.  We can see that at an altitude of 100 ft. each pixel will represent an area a little over $1/3$ of an inch wide when looking straight down, which should be a sufficient level of detail to accurately identify any target.  However, at an altitude of 500 ft. each pixel will represent an area almost 2 inches wide when looking straight down.  We are confident that this level of detail will be enough to identify the shapes and colors of all targets at any required altitude, but we may have some difficulty identifying alpha-numerics on very small targets at high altitudes.  As a first year team, we feel that meeting the ``threshold'' rather than the ``objective'' goals, at the edge of the altitude envelope, is an acceptable level of performance.
 
-Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  To determine how the images will appear from different altitudes, we have a table that maps the size of features in the world to pixels in our images at different altitudes.  We also see how this mapping will be affected when the camera is pointed straight down compared to when it is tilted at a 45 degree angle.  We can see that at 100 ft. each pixel will represent a little over $1/3$ of an inch when looking straight down, which should be a sufficient level of detail to accurately identify any target.  However, at 500 ft. each pixel is 2 inches wide when looking straight down, which will lead to blurry images.  We are confident that this level of detail will be enough to identify the shapes and colors of all targets at any required altitude, but we may have some difficulty identifying alpha-numerics on very small targets at high altitudes.  As a first year team, we feel that meeting the ``threshold'' rather than the ``objective'' goals, at the edge of the altitude envelope, is an acceptable level of performance.
-
-\begin{tabular}{ccc}
-\\{\bf altitude (ft)} & {\bf pixel width at $0,^{\circ}$ (in)} & {\bf pixel width at $45,^{\circ}$ (in)} \\
-       100 &       0.38 &       0.54 \\
-       200 &       0.76 &       1.08 \\
-       300 &       1.14 &       1.62 \\
-       400 &       1.52 &       2.16 \\
-       500 &       1.90 &       2.69 \\
-\end{tabular}
-
-% please give details of still pictures, including the field of view per pixel. include a quick table of resolving power (projection of pixel field of view, center of frame, onto ground) at altitudes [100,200,300,400 agl] for straight down and 45 degree angle. Please also give the resolving power of the video viewfinder
+\begin{figure} [H]
+	\centering
+		\begin{tabular}{ccc}
+		\\{\bf altitude (ft)} & {\bf pixel width at 0$^{\circ}$ (in)} & {\bf pixel width at 45$^{\circ}$ (in)} \\
+	       100 &       0.38 &       0.54 \\
+	       200 &       0.76 &       1.08 \\
+	       300 &       1.14 &       1.62 \\
+	       400 &       1.52 &       2.16 \\
+	       500 &       1.90 &       2.69 \\
+		\end{tabular}
+		\caption[Pixel Width Mapping]{mapping of altitude to the area each pixel will represent in an image}
+		\label{fig:pixelmapping}
+\end{figure}
 
 \subsection{Pan Tilt Unit}
 
@@ -320,17 +319,14 @@ Each still picture is 5 megapixels, with an actual resolution of 2592 x 1944.  T
 	\label{fig:pantilt_link}
 \end{figure}
 
-In order to meet the target imaging requirments, we needed to add both pan and tilt actuators to the camera. The XX by YY degree lens field of view is insufficient to see off flight path targets, and would limit our capability in the target search area phase. 
-We designed a pan tilt unit which make it possible to image the entire hemisphere below the fuselage of the aircraft.
+In order to meet the target imaging requirments we needed to add both pan and tilt actuators to the camera. The field of view of our lens is only \degrees(45) by \degrees(34), which is not enough to meet the competition field of view requirements of \degrees(60) vision in each direction.  To address this issue, we designed a pan tilt unit which makes it possible to image the entire hemisphere below the fuselage of the aircraft.
 
-We took advantage of the MHS-PM5's swiveling lens assembly 
-(see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \ref{hitechs77bb}, and is capable of \degrees{180} rotation. Figures \ref{fig:pantilt} and \ref{fig:pantilt_linkdetail} show the camera lens tilted at \degrees{45} below the horizon.
-The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Pan-tilt control board.
+We took advantage of the MHS-PM5's swiveling lens assembly (see Figure \ref{fig:camera_frontview}, and added a servo actuator which can rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \cite{hitechs77bb}, and is capable of \degrees{180} rotation. Figures \ref{fig:pantilt} and \ref{fig:pantilt_linkdetail} show the camera lens tilted at \degrees{45} below the horizon.
+The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \cite{hitechs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Pan-tilt control board.
 
-The total height of the imaging system is 6.75", a maximum 2'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete and installed in the aircraft. 
+The total height of the imaging system is 6.75", a maximum 2" of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and fits inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide hass been added to keep the wires from tangling.
 
-The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular acceleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.
-The endpoints of the tilt rotation rang are calibrated and enforced in software, because pushing the camera outside this range may damage it.
+The pan servo is calibrated before installation by mapping servo PWM inputs to a measured angular output at \degrees{30} intervals. Linear interpolation is used to determine PWM outputs which achieve intermediate angles. The tilt servo is calibrated at \degrees{10} intervals, due to its much smaller rotation range. As shown in Figure \ref{fig:pantilt_linkplots}, the angular acceleration of the camera angle linkage (Alpha4) is almost constant compared to the servo arm linkage throughout the range $[0^{\circ}, 135^{\circ}]$. The linkage has been designed to keep the majority of nonlinear rotation outside the camera's range of rotation. Therefore, we can consider the calibrated servo output to be directly related to the camera angle.  The endpoints of the tilt rotation rang are calibrated and enforced in software, because pushing the camera outside this range may damage it.
 
 \subsection{Obtaining Images}
 
@@ -347,14 +343,19 @@ When a picture is taken on the plane it is immediately saved on the camera's mem
 
 \subsection{Downloading Images in Real Time}
 
-Once images are on the plane's computer they are ready to be downloaded over a 2.4GHz XBee radio link.  Each picture taken by the camera is about 500KB in size, while our theoretical maximum throughput is only 115200 baud (and only about half of that in practice).  Each full image takes about a minute to download, so we created a method to speed up the process.  The entire image is first downloaded as an 800x600 resolution `thumbnail.'  Once the thumbnail is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  Downloading both the crop and the thumbnail generally takes under 30 seconds, less than half the time of downloading the full image, allowing us to quickly obtain high resolution images of the targets of interest.
+Once images are on the plane's computer they are ready to be downloaded over a 2.4GHz XBee radio link.  Each picture taken by the camera is about 500KB in size, while our theoretical maximum throughput is only 115200 baud (and only about half of that in practice).  Each full image takes almost three minutes to download, so we created a method to speed up the process.  The entire image is first downloaded as an 800x600 low resolution `thumbnail.'  Once the thumbnail is available for viewing, the operator can select an area of interest and download a high-res crop of just that area.  Downloading both the crop and the thumbnail generally takes under 30 seconds, less than $1/5$ the time of downloading the full image, allowing us to quickly obtain high resolution images of the targets of interest.
 
-\begin{tabular}{rrr}
- & {\bf Size (KB)} & {\bf Download Time (s)} \\
- {\bf Original Image} &        500 &       69.4 \\
- {\bf Thumbnail} &        125 &       17.4 \\
- {\bf Crop} &         25 &        3.5 \\
-\end{tabular}
+\begin{figure} [H]
+	\centering
+		\begin{tabular}{rrr}
+		 & {\bf Size (KB)} & {\bf Download Time (s)} \\
+		 {\bf Original Image} &        1200 &       166.7 \\
+		 {\bf Thumbnail} &        125 &       17.4 \\
+		 {\bf Crop} &         25 &        3.5 \\
+		\end{tabular}
+	\caption[Download Times for Images] {size and download time for a full size image vs. a low-resolution thumbnail and a cropped area}
+	\label{fig:imagedownloadtimes}
+\end{figure}
 
 Below a diagram is included that shows the entire flow of events from start to finish in our Imaging System for capturing an image and then downloading it.
 
@@ -369,16 +370,16 @@ Below a diagram is included that shows the entire flow of events from start to f
 \item Command to take a picture is sent to Plane from Image Station
 \item Plane sends command to camera, picture is taken and acknowledgement is sent to Image Station
 \item Operator issues command to make images available for download
-\item Plane acknowledges request and begins transfer of images from internal camera memory to the BeagleBoard.  Sends notification when transfer is complete.
+\item Plane acknowledges request and begins transfer of images from internal camera memory to the BeagleBoard.  Plane sends notification when transfer is complete.
 \item Newly available image(s) are automatically put on a queue to be downloaded.
 \item A request to download a 250 byte chunk of the image at the top of the queue is sent to the plane.
 \item The plane sends down the requested chunk of image.
-\item Steps 6-7 are repeated throughout the duration of the flight.  These image downloading commands are low priority and will only be sent if there are no other commands to be executed, This allows for high priority commands like taking a picture or moving the camera to be executed at any time.
+\item Steps 6-7 are repeated throughout the duration of the flight.  These image downloading commands are low priority and will only be sent if there are no other commands to be executed. This allows for high priority commands like taking a picture or moving the camera to be executed at any time.
 \end{enumerate}
 
 \subsection{Identifying target characteristics}
 
-When an image has been fully downloaded to the ground targets can be identified and tagged with metadata.  Information about the plane's orientation, gps coordinates, altitude, yaw/pitch/roll, and pan/tilt of the camera are sent down with the image.  Using this information the GPS location of the target can be determined using the intrinsic properties of the camera and some basic trigonometry. Target shape, color, alphanumeric, alphanumeric color, and orientation are all entered manually by the operator.
+When an image has been fully downloaded to the ground targets can be identified and tagged with metadata.  Information about the plane's orientation, gps coordinates, altitude, yaw/pitch/roll, and pan/tilt of the camera are sent down when the image is downloaded.  Using this information the GPS location of the target can be determined using the intrinsic properties of the camera and some basic trigonometry. Target shape, color, alphanumeric, alphanumeric color, and orientation are all entered manually by the operator.
 
 \begin{figure} [h]
   \centering
@@ -410,7 +411,7 @@ A safety observer is defined as a person, devoid of any additional specific resp
 
 \newpage
 \appendix
-\renewcommand\thesection{Appendix \Alph{section}}
+\renewcommand\thesection{Appendix \Alph{section}:}
 \section{Preflight Procedures}
 \label{sec:appendix_preflight}
 \begin{enumerate}
@@ -451,8 +452,8 @@ A safety observer is defined as a person, devoid of any additional specific resp
 
 \end{enumerate}
 
-
 \bibliographystyle{plain}
-\bibliography{paper}
+%\renewcommand{\refname}{\section{Citations}}
+\bibliography{citations}
 
 \end{document}
