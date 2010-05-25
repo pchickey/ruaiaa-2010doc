@@ -122,9 +122,15 @@ The decision to employ a large, high wing trainer, however, forced us to rethink
 
 \subsubsection{Electronics System Engineering}
 
-The electronics team was in charge of the autopilot system and the imaging system. The biggest system design choice we made was to use a single board Linux-based flight computer as the platform for both systems. We felt that the best way to develop software which interfaces with a wide variety of analog and digital electrical systems, has complicated information flow requirements, 
+The electronics team was in charge of the autopilot system and the imaging system. The biggest system design choice we made was to use a single board Linux-based flight computer as the platform for both systems. We felt that the best way to develop software which interfaces with a wide variety of analog and digital electrical systems, and has complicated information flow requirements.
 
-We felt the Paparazzi system was full featured and proven, but we weren't satisified with the capabilities of the existing Paparazzi hardware. The ``Tiny'' v2.1\cite{paparazzi_tinyv21}, the latest 
+We had sketched plans for an electronics system built entirely on a Linux-based flight computer as early as July 2009, but planned on using a more standard microcontroller-based autopilot system with an auxillary Linux-based computer for the imaging system until December 2009. After burning out our microcontroller based autopilot for the second time, we were faced with a long lead time for an expensive replacement part. On that impetus, we redesigned our electronics systems to eliminate the microcontroller autopilot and ensure all of our replacment parts would be inexpensive and commercially available from many vendors. The move to a single Linux-based flight computer, while not without obstacles, was a successful design decision, as we'll describe in this paper.
+
+\subsubsection{Autopilot System Engineering}
+
+We felt the Paparazzi system was full featured and proven, but we weren't satisified with the capabilities of the existing Paparazzi hardware. The ``Tiny'' v2.1\cite{paparazzi_tinyv21}, the latest autopilot hardware released by the Paparazzi project, is based on a 64 pin ARM microcontroller. Almost all of its input-output capabilities are dedicated to autopilot functions, making it difficult to expand functionality 
+
+ The first task was to select hardware which would allow us to port the airborne code from the Paparazzi's standard microcontroller-based autopilot hardware to our flight computer.
 
 \subsubsection{Safety of Linux Based Flight Computer}
 
@@ -134,9 +140,7 @@ We elected to take many steps in the software engineering to help ensure our fli
 
 Because our entry is essentially an experimental system, and will always be operated with a safety pilot present, we engineered the safety pilot override to operate independently from the flight computer. We have ensured that, short of losing power to the radio control receiver and servos, the safety pilot will always be able to take over at a moment's notice. We have also ensured that the flight computer's servo controller will be able to detect a loss of computer control and servos to a recoverable default. Along with careful preflight testing, careful observation, and definitive analysis of any errors encountered during flight, these measures meet the spirit and letter of competition rules.
 
-\subsubsection{Autopilot System Engineering}
 
-As stated previously, the Paparazzi system is the most capable and proven open-source autopilot system available. The first task was to select hardware which would allow us to port the airborne code from the Paparazzi's standard microcontroller-based autopilot hardware to our flight computer.
 
 \subsubsection{Imaging System Engineering}
 
