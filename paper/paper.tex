@@ -38,9 +38,7 @@
 
 \section{Introduction}
 
-The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal of entering the 2009 AUVSI UAS competition. We didn't make it to the 2009 competition after loosing our aircraft only four weeks before. Our imaging system and autopilot system were also far from ready. 
-
-In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
+The Rutgers Autonomous Aircraft Team was formed in September 2008 with the goal of entering the 2009 Association for Unmanned Vehicle Systems International (AUVSI)\cite{auvsiweb} Unmanned Air Systems (UAS) competition\cite{uasweb}. We didn't make it to the 2009 competition after losing our aircraft only four weeks before. Our imaging system and autopilot system were also far from ready. In terms of NCAA sport eligibility, one could consider 2009 our `red shirt' year. In 2010 we are still rookies.
 
 The team is made of 12 Rutgers undergraduates:\\
 \\ \begin{tabular}{l l}
@@ -63,18 +61,17 @@ amongst many who spent time mentoring us.
 
 We have been generously funded by 
 Rutgers Engineering Governance Council,
-Rutgers Alumni Association, and
-WINLAB, a laboratory of the Rutgers University Department of Electrical Engineering.
-% What was Chris Brocco's Uncle's Company? Something Automation?
-BP Hobbies, 
+Rutgers Alumni Association,
+WINLAB, a laboratory of the Rutgers University Department of Electrical Engineering, 
+and BP Hobbies. 
 
 We would like to acknowledge
-Louis Stumpf, for donating the aircraft which became the \emph{Daedalus};
+Louis Stumpf, for donating the aircraft that became the \emph{Daedalus};
 Jeff Perkins, for his prolific networking and promotion of the team;
 Gregg Peters of BP Hobbies for getting us out of numerous binds;
 Dave Devries and Michael Maia, of Invensense, for their technical guidance;
 Professor Chung-chieh Shan, for overseeing Pat's independent study on the IMU design;
-Ivan Seskar, for keeping us (and many other undergrads) in the black;
+Ivan Seskar, for keeping us (and many other undergrads) in the black; and
 Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor.
 
 \begin{figure}[b!]
@@ -87,11 +84,11 @@ Roger Kondos and Brij Pathak, for contributing to the thermopile attitude sensor
 \newpage
 \section{Systems Engineering}
 \subsection{Goals}
-For this entry, we took a close look at our goals and requirements, and dialed back our approach to ensure we would meet the most basic competition requirements successfully.
+For this entry we took a close look at our goals and requirements, and attempted to meet the ``threshold'' competition requirements successfully.
 We started the design by forming, as a team, some broad goals based on our experience in the 2009 competition.
-These formed the basis on which sub-teams and individuals tackled the smaller problems while still keeping an eye on the big picture. 
+These goals allowed sub-teams and individuals to tackle the smaller problems while still keeping an eye on the big picture. 
 
-We also wanted to balance building with buying, keeping in mind our slim finances. While we couldn't build every part of our entry from scratch, we tried to build whatever we could given the 16th June competition deadline.
+We also wanted to balance building components with buying components, keeping in mind our slim finances. While we couldn't build every part of our entry from scratch, we were motivated to build as much of our systems as possible for the learning experience. We tried to buy only components which we didn't have the time or resources to build ourselves.
 
 %\footnote{``If you want to make an apple pie from scratch, you must first create the universe'' - Dr. Carl Sagan \cite{saganquote}}, 
 
@@ -99,26 +96,25 @@ We also wanted to balance building with buying, keeping in mind our slim finance
 \begin{itemize}
 	\item The air vehicle must be stable and slow, with ample payload capacity and 20 minute flight duration. It should be a proven and durable fixed-wing design.
 	\item The autopilot must be based on a proven system, so we could focus on improving an existing system rather than reinventing the wheel. It also must be open-source, both because of the high cost commercial systems, and because we want to learn about and experiment with the internals of our autopilot system.
-	\item The imaging system must be simple and capable. We assume the operator will be burdened with guiding the camera and identifying targets until time and resources permit us to add sensor information and control loops for guidance, and computer vision for identification. It will be custom built, because we could not find any affordable systems available commercially.
+	\item The imaging system must be simple and capable. We assume the operator will be burdened with guiding the camera and identifying targets manually. We couldn't guarantee time and resources would permit us to add sensor information and control loops for camera guidance and computer vision for target identification.
 \end{itemize}
 
-We made design decisions of which competition goals we will attempt. 
-We will be performing a manual take off, and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk, during development and competition, to our aircraft.
+We will be performing a manual take off and giving the autopilot system control of the aircraft once the plane is in the air. We will also perform a manual landing. We decided not to pursue the reach goals of autonomous takeoff and landing based on our inexperience and the risk of a crash during development.
 \subsection{System Design Decisions}
 \subsubsection{Airframe System Engineering}
 
 Our team was divided by area of expertise into a mechanical team and an electrical team.The mechanical team began the year with the goal of producing two competition worthy airframes. These were to become the \emph{Daedalus} and \emph{Knight Two}.
 
-The teams made design decisions based on the aforementioned competition goals.
+One of the most difficult design decisions was to quantify ``ample payload.'' Payload size and weight is the major determining factor in aircraft size.  We originally assumed a 2.5lb electronics (flight computer, sensors, and batteries) payload and a 2.5lb pan-tilt camera 8'' in diameter, requiring 6'' of vertical space below the bottom of the aircraft. These considerations introduced two major design parameters: the aircraft must be capable of carrying a minimum 5lb payload, and must be situated to provide clearance for the pan tilt unit.
 
-One of the most difficult design decisions was to quantify ``ample payload.'' Payload size and weight is the major determining factor in aircraft size.  We originally assumed a 2.5lb electronics (computer + batteries) payload and a 2.5lb pan-tilt camera 8'' in diameter, requiring 6'' of vertical space extruding from the bottom of the aircraft. These considerations introduced two major design parameters: the aircraft must be capable of carrying a minimum 5lb payload, and must be situated to provide clearance for the pan tilt unit.
+We also needed an easily controllable, stable platform to accommodate the autopilot, and we needed to keep flight speed low to make image capture as easy as possible. After consulting with R/C experts, a high wing trainer is looked like the most stable and proven fixed-wing design. Trainers traditionally have light wing loading for slow speed flight, and are able to carry a comparatively large payload.Their lower wing loading is easier to control, and easier to recover if power is lost. 
 
-Additionally, we sought an easily controllable, stable platform to accommodate the autopilot, and an ability to fly at low speeds, in order to more easily capture clear images.
+Erring on the side of caution, we decided our aircraft should be capable of accommodating a worst-case scenario payload. 
+We were, in part, cautious due to a previous error where we rebuilt an entire aircraft to accommodate a larger payload.
+We decided on a high wing trainer with a 10' to 12' wingspan, so that we could accommodate up to 5lbs of payload while maintaining suitable wing loading.
+Though we managed to keep our payload weight well under 5lbs, the only major drawback to having an oversize aircraft is the difficulty of transport.
 
-We determined, after consulting with R/C experts, that a high wing trainer is the most stable and proven fixed-wing design. Trainers traditionally have light wing loading for slow speed flight, and are able to carry a comparatively large payload. Additionally, a large plane with lower wing loading is easier to control, and easier to recover if power is lost. Consciously agreeing to err on the side of caution, we sought a large plane capable of accommodating a worst-case scenario payload, and settled on a wingspan on the order of 10'-12'. Though lighter and smaller payload alternatives were found as the year progressed, these merely leave us with more freedom for future modifications.
-%That last sentence sounds kind of eh, I'm stuck on a decent wording, so I'm leaving it for now.
-
-The decision to employ a large, high wing trainer, however, forced us to rethink our original pan-tilt design. Last year, in order to accommodate the pan-tilt unit, we designed a pusher plane, enabling us to mount the pan-tilt under the plane's nose, which had sufficient clearance. Since trainers are generally designed with front-mounted engines (I presume?), we were forced to engineer a new solution requiring significantly less clearance. In the long run, we modified the pan-tilt mount to allow us to recess more of the pan-tilt unit into the body of the plane---this had the added benefit of providing more protection to an expensive piece of equipment on takeoff and landing.
+Our selection of a trainer type aircraft encouraged us to rethink our pan tilt design. We based our initial assumptions of an 8'' diameter pan and tilt unit, mounted underneath the aircraft, based on a design that was to be mounted on the nose of our 2009 entry, an aircraft with a pusher motor configuration. When we considered the possibilities of either dramatically increasing the ride height of our aircraft, or making significant modifications to the width of the fuselage, we decided to redesign our pan tilt system to fit in a more suitable envelope. 
 
 \subsubsection{Electronics System Engineering}
 
