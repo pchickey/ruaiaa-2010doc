@@ -124,7 +124,7 @@ The decision to employ a large, high wing trainer, however, forced us to rethink
 
 The electronics team was in charge of the autopilot system and the imaging system. The biggest system design choice we made was to use a single board Linux-based flight computer as the platform for both systems. We felt that the best way to develop software which interfaces with a wide variety of analog and digital electrical systems, has complicated information flow requirements, 
 
-We felt the Paparazzi system was full featured and proven, and we wanted to adapt it to our needs.
+We felt the Paparazzi system was full featured and proven, but we weren't satisified with the capabilities of the existing Paparazzi hardware. The ``Tiny'' v2.1\cite{paparazzi_tinyv21}, the latest 
 
 \subsubsection{Safety of Linux Based Flight Computer}
 
@@ -172,13 +172,14 @@ A member of our local R/C club, Tri-County RC \cite{tricountyRC}, donated a ten-
 We wanted to certify the wings and wing root would withstand large dynamic forces in flight. 
 We designed a test similar to mimic the 
 Federal Airworthiness Standards' structural requirements\footnote{Special Federal Aviation Regulation No. 23, Subpart C--Structure. Assuming full load on wing as described in 23.335 paragraph 4.i., where an aircraft must pull out of a \degrees{7.5} dive at cruise velocity and cruise power ``with a load factor of 1.5 (0.5$g$. acceleration increment)'' \cite{far23}}. Our first test was designed to certify that the wing, supported at the wing root and fuselage, could take a bottom loading present in a 1.5$g$ acceleration, with a safety factor of 1.5\footnote{As stated in 23.303 \cite{far23}.}.
- 
-The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symmetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} wings supported 64 lbs (250\% of the maximum take-off weight) under static loading.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
-\begin{wrapfigure}{r}{0.4\textwidth}
+
+ \begin{wrapfigure}{r}{0.4\textwidth}
 	\includegraphics[width=0.37\textwidth]{../images/daedalus_sandbagtest.jpg}
 	\caption{Load testing the underside of the \emph{Daedalus}'s wings. Shown with 16lbs of load.}
 	\label{fig:sandbagtest}
 \end{wrapfigure}
+The plane was carefully supported under the center section, nose, and tail while pre-weighed bags of sand were slowly placed symmetrically and simultaneously on the underside of each wing, starting from the innermost rib.  The \emph{Daedalus} wings supported 64 lbs (250\% of the maximum take-off weight) under static loading.  We also rocked the plane ten degrees from side to side while fully loaded to simulate differential loads during flight. Our post-test structure inspection found no warped members or cracked joints.
+
 A second test was designed to certify the wing could take a top loading present from a 1.5$g$ acceleration with a safety factor of 1.5, and to certify that load could be transmitted to the ground through the fuselage and landing gear. With the aircraft fully assembled and sitting upright on the landing gear, we loaded the top of the wing along the quarter chord with 64 lbs of sandbags. As in our first test, we also rocked the plane \degrees{10} side to side to simulate uneven loading. Our post-test structure inspection once again found no warped members or cracked joints.
 
 Satisfied, made engine and surface tests (see \ref{sec:appendix_preflight}) before taxiing the plane around a parking lot.  We brought the plane back inside, examined it for signs of stress and, finding everything in good condition, deemed the \emph{Daedalus} flight-worthy.
@@ -325,7 +326,7 @@ We designed a pan tilt unit which make it possible to image the entire hemispher
 
 We took advantage of the MHS-PM5's swiveling lens assembly 
 (see Figure \ref{fig:camera_frontview}, and added a servo actuator which could rotate the lens \degrees{135} back from straight forward, as shown in Figure \ref{fig:pantilt_linkdetail}. The tilt servo is a Hitech HS 77BB \ref{hitechs77bb}, and is capable of \degrees{180} rotation. Figures \ref{fig:pantilt} and \ref{fig:pantilt_linkdetail} show the camera lens tilted at \degrees{45} below the horizon.
-The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Camera Control board.
+The camera and tilt servo assembley is attached to the aircraft on a rotating mount. A thrust bearing takes lateral loads off the pan servo shaft, and stabilizes the assembly. The pan servo is a Hitech HS 785HB \ref{hitechhs785}, and is capable of \degrees{1260} rotation (3.5 revolutions). Both servos are powered and controlled by the Pan-tilt control board.
 
 The total height of the imaging system is 8.75", only 4'' of which is exposed below the fuselage of the aircraft. The rotating assembly is, on its widest dimension 2.13", and would fit inside a 2.5" cylinder. Wires exiting the side of the camera, inside the fuselage, may make the assembly a bit wider. Because the maximum rotation is only \degrees{1260}, the camera and tilt servo wires only have to be capable of wrapping \degrees{\pm 630} around the shaft below the thrust bearing. A wire guide will be added to keep the wires from tangling once construction of the pan-tilt is complete and installed in the aircraft. 
 
