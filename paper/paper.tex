@@ -192,7 +192,7 @@ Satisfied, we made engine and surface tests (see \ref{sec:appendix_preflight}) b
 
 \end{figure}
 
-In order to mitigate a disaster such as we had last year, we decided to build another airframe which could replace the \emph{Daedalus} at short notice. We selected an Aero-Design 12 Foot Telemaster \cite{aerodesign} because it was available as a balsa kit and similar in size to the \emph{Daedalus}. The 12 Foot Telemaster has a 12ft 1in (3.68m) wingspan, and is 7ft 10in (2.38m) in length.We named it the \emph{Knight Two} after the Rutgers University mascot, the Scarlet Knight.
+In order to mitigate a disaster such as we had last year, we decided to build another airframe which could replace the \emph{Daedalus} at short notice. We selected an Aero Craft Ltd. 12 Foot Telemaster \cite{aero_craft_ltd} because it was available as a balsa kit and similar in size to the \emph{Daedalus}. The 12 Foot Telemaster has a 12ft 1in (3.68m) wingspan, and is 7ft 10in (2.38m) in length.We named it the \emph{Knight Two} after the Rutgers University mascot, the Scarlet Knight.
 
 At the time of this writing, the \emph{Knight Two} is 85\% complete. We plan to complete the aircraft and bring it to the competition as a spare.  
 Since our testing plan for the \emph{Daedalus} was successful, we will follow the same plan when the \emph{Knight Two} is completed.
@@ -219,7 +219,7 @@ Our entry uses an autopilot system based off the open source Paparazzi project \
 \end{figure}
 
 \subsubsection{Single Board Computer}
-We selected the Beagleboard \cite{beagleboard}, a single board computer made by Texas Instruments. It features a 500MHz ARM Cortex A8 processor and 256MB ram. We installed Angstrom Linux \cite{angstromlinux} on an 8GB SD card. The Beagleboard has a few logic level serial, parallel, and general purpose IO interfaces on board, but for simplicity we chose to attach all of the devices through the USB bus. The Beagleboard provides one USB host port for this purpose, but the power supply can only sustain a low current draw. To provide more current to the attached devices, we use a Belkin 7-port powered USB hub \cite{belkin7usbhub}. With a proper power supply, the USB hub will provide up to 500mA to each port on the 5v/GND circuit.
+We selected the Beagleboard \cite{beagleboard}, a single board computer made by Texas Instruments. It features a 500MHz ARM Cortex A8 processor and 256MB ram. We installed Angstrom Linux \cite{angstromlinux} on an 8GB SD card. The Beagleboard has a few logic level serial, parallel, and general purpose IO interfaces on board, but for simplicity we chose to attach all of the devices through the USB bus. The Beagleboard provides one USB host port for this purpose, but the power supply can only sustain a low current draw. To provide more current to the attached devices, we use a Belkin 7-port powered USB hub. With a proper power supply, the USB hub will provide up to 500mA to each port on the 5v/GND circuit.
 
 \subsubsection{Servo Subsystem}
 We are using Pololu Micro Maestro \cite{micromaestro}, which communicates with the flight computer over USB and features 6 Servo PWM outputs. On Linux, the Micro Maestro enumerates as a \texttt{ttyACM} device. A simple serial protocol is used to update the servo PWM outputs. The Micro Maestro also features a configurable timeout and failsafe position for the servo PWM outputs. We have configured the device to bring each servo to a predefined position (throttle closed, elevator up, rudder right, ailerons left) after a 2 second new command timeout. This ensures that if the autopilot process or entire flight computer fails to respond for 2 seconds, the aircraft will enter this mode until the safety pilot takes control.
@@ -239,7 +239,7 @@ A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is abl
 \end{wrapfigure}
 Early in the school year, we built a thermopile-based attitude (pitch and roll) sensor very similar to the sensor design used by the Paparazzi Tiny autopilot. Accompanied by a driver which allowed it to appear to the airborne software just as it would on the Tiny, this simple analog sensor helped us prototype and test the Paparazzi system. Having built a superior sensor, we keep it as a backup. It is detailed in Figure \ref{fig:hardware_conn_diagram} although we do not intend to use it for the competition.
 
-Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}. Both the ITG-3200 and LSM303DLH have an all digital interface, and communicate with a microcontroller on a single I2C \cite{i2c} serial bus. The microcontroller performs the self-test on the LSM303DLH at start-up, and proceeds to send uncalibrated samples to the flight computer over its UART connection. Samples of all 9 axes (three each of gyro, accelerometer, and magnetometer) are taken and sent to the flight computer at 40Hz.
+Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}. Both the ITG-3200 and LSM303DLH have an all digital interface, and communicate with a microcontroller on a single I2C \cite{wikii2c} serial bus. The microcontroller performs the self-test on the LSM303DLH at start-up, and proceeds to send uncalibrated samples to the flight computer over its UART connection. Samples of all 9 axes (three each of gyro, accelerometer, and magnetometer) are taken and sent to the flight computer at 40Hz.
 
 The two sensors and an AVR microcontroller, mounted on breakout boards, were hooked up using simple 0.1" pitch protoboard, as shown in Figure \ref{fig:ahrs_picture}. The sensor board is powered by the Sparkfun FTDI serial to USB adapter \cite{sparkfun_ftdi} the microcontroller uses to communicate with the flight computer. 
 \subsubsection{Other Components}
@@ -268,11 +268,13 @@ The autopilot software is a port of the Paparazzi airborne software to Linux. Th
 
 The multithread approach helps ensure that the aircraft control thread will not be disrupted by busy waiting. It results in a simple structure of the whole program, and minimized the amount of code we had to change in the port. We care about minimizing changes to Paparazzi because the code is known to be well tested and reliable.
 
-The multithread approach works well for resources which are only needed by the autopilot process, but both the attitude and GPS information are needed by both the autopilot and imaging system processes. To remedy this, we use \texttt{gpsd} \cite{gpsd}, the standard Linux GPS service, to interface with the uBlox GPS device over a serial port. \texttt{Libgps}, a library for interfacing with \texttt{gpsd}, provides updates to client threads in both the autopilot and imaging processes. We handle the AHRS updates in the same way, except instead of the specialized \texttt{libgps} library we use the generic \texttt{mqueue} \cite{mqueue} service, a message passing facility provided by the Linux kernel. Each client thread opens a named queue, and the AHRS process delivers updated measurements to each queue.
+The multithread approach works well for resources which are only needed by the autopilot process, but both the attitude and GPS information are needed by both the autopilot and imaging system processes. To remedy this, we use \texttt{gpsd} \cite{gpsd}, the standard Linux GPS service, to interface with the uBlox GPS device over a serial port. \texttt{libgps}, a library for interfacing with \texttt{gpsd}, provides updates to client threads in both the autopilot and imaging processes. We handle the AHRS updates in the same way, except instead of the specialized \texttt{libgps} library we use the generic \texttt{mqueue} \cite{mqueue} service, a message passing facility provided by the Linux kernel. Each client thread opens a named queue, and the AHRS process delivers updated measurements to each queue.
 
 \subsection{Attitude and Heading Reference Sensor Software}
 
-The physical AHRS board sends 9 uncalibrated measurements to the flight computer, but the aircraft control loop is requires in attitude and heading expressed as 3 Euler angles \cite{euler_angles} and their derivatives with respect to time. It is straightforward to estimate Euler angle derivatives from rate gyro measurements, but estimating three degrees of angular orientation from six magnetometer and accelerometer measurements is a difficult nonlinear operation. Many algorithms exist 
+The physical AHRS board sends 9 uncalibrated measurements to the flight computer, but the aircraft control loop is requires in attitude and heading expressed as 3 Euler angles and their derivatives with respect to time. It is straightforward to estimate Euler angle derivatives from rate gyro measurements, but estimating three degrees of angular orientation from six magnetometer and accelerometer measurements is a difficult nonlinear operation. 
+
+While their discussion is outside the scope of this paper, many algorithms exist for this conversion. We use a Quaternion Kalman Filter algorithm described in \cite{choukroun04}, implemented as a complete filter in Haskell. Angular orientation is tracked in quaternion form, and translated into euler angles for the use of the autopilot and imaging processes. This implementation was carried out as part of an independent study by team member Pat Hickey, and more details can be found in \cite{hickey10hsqkf}.
 
 \subsection{Ground Station}
 
@@ -282,7 +284,7 @@ The physical AHRS board sends 9 uncalibrated measurements to the flight computer
 	\includegraphics[width=0.37\textwidth]{../images/paparazzi_gcs.jpg}
 	\caption{Paparazzi GCS. Image Credit: Paparazzi Wiki \cite{paparazziweb }}
 	\label{fig:paparazzi_gcs}
-	\vspace{-60pt}
+	\vspace{-40pt}
 \end{wrapfigure}
 Because we based our autopilot software on the Paparazzi project, we were able to make use of their excellent ground control software (GCS) with essentially no modifications. The Paparazzi GCS provides a map interface that allows the operator and competition judges to inspect the aircraft's position to ensure it is within the allowed airspace. It also provides attitude and altitude telemetry, and notification of lost radio contact, so the operator can alert the safety pilot to unsafe operation.
 
@@ -429,7 +431,7 @@ Our system is designed to gracefully handle any failure while continuing to ensu
 	\item If the plane loses telemetry with the ground station for more than 10 seconds, the autopilot will default to a ``return home mode'' that will direct the plane towards the ground station in hopes of reestablishing a connection.  
 	\item If the connection telemetry remains dead for 30 seconds, the autopilot will bring the servos to a predefined default (throttle closed, elevator up, rudder right, ailerons left). The servos will remain in that position until the safety pilot takes control of the aircraft.
 	\item If the flight computer does not provide the servo controller with a new servo output value for longer than 2 seconds, the servo controller will bring the servos to a predefined default (throttle closed, elevator up, rudder right, ailerons left).  The servos will remain in that position until the safety pilot takes control of the aircraft.
-	\item During engine start, the centerman (see \ref{appendix_preflight}) may kill the engine at any time with the ignition switch located on the right side of the aircraft, behind the engine mount.
+	\item During engine start, the centerman (see \ref{sec:appendix_preflight}) may kill the engine at any time with the ignition switch located on the right side of the aircraft, behind the engine mount.
 	\item Radio control channel 6 functions as a remote kill switch on the \emph{Knight Two}, disengaging the electronic ignition system of the engine. (The \emph{Daedalus} has a magneto ignition, so we only have the manual kill switch behind the engine mount)
 \end{itemize}
 
@@ -481,8 +483,6 @@ A safety observer is defined as a person, devoid of any additional specific resp
 	\item Pilot commences takeoff.
 
 \end{enumerate}
-
-\newpage
 
 \bibliographystyle{plain}
 %\renewcommand{\refname}{\section{Citations}}
