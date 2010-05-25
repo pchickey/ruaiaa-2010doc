@@ -239,10 +239,9 @@ A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is abl
 \end{wrapfigure}
 Early in the school year, we built a thermopile-based attitude (pitch and roll) sensor very similar to the sensor design used by the Paparazzi Tiny autopilot. Accompanied by a driver which allowed it to appear to the airborne software just as it would on the Tiny, this simple analog sensor helped us prototype and test the Paparazzi system. Having built a superior sensor, we keep it as a backup. It is detailed in Figure \ref{fig:hardware_conn_diagram} although we do not intend to use it for the competition.
 
-Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}. Both the ITG-3200 and LSM303DLH have an all digital interface, and communicate with a microcontroller on a single I2C \cite{i2c} serial bus. Samples of all 9 axes (three each of gyro, accelerometer, and magnetometer) are taken and sent to the flight computer at 40Hz.
+Thanks to sensor donations from Invensense and ST Micro, we were able to build a 9 axis Attitude and Heading Reference Sensor (AHRS) from an Invensense ITG-3200 3-axis rate gyro \cite{itg3200} and an ST Micro LSM303DLH 3-axis accelerometer and magnetometer \cite{lsm303dlh}. Both the ITG-3200 and LSM303DLH have an all digital interface, and communicate with a microcontroller on a single I2C \cite{i2c} serial bus. The microcontroller performs the self-test on the LSM303DLH at start-up, and proceeds to send uncalibrated samples to the flight computer over its UART connection. Samples of all 9 axes (three each of gyro, accelerometer, and magnetometer) are taken and sent to the flight computer at 40Hz.
 
-The two sensors and an AVR microcontroller, mounted on breakout boards, were hooked up using simple 0.1" pitch protoboard, as shown in Figure \ref{fig:ahrs_picture}. The sensor board is powered by the Sparkfun FTDI serial to USB adapter \cite{sparkfun_ftdi} the microcontroller uses to communicate with the flight computer.
-
+The two sensors and an AVR microcontroller, mounted on breakout boards, were hooked up using simple 0.1" pitch protoboard, as shown in Figure \ref{fig:ahrs_picture}. The sensor board is powered by the Sparkfun FTDI serial to USB adapter \cite{sparkfun_ftdi} the microcontroller uses to communicate with the flight computer. 
 \subsubsection{Other Components}
 \begin{itemize}
 	\setlength{\itemsep}{0cm}
@@ -258,23 +257,32 @@ Both the Beagleboard and the powered USB hub are provided with 5VDC via a switch
 
 \subsection{Autopilot Software}
 \label{sec:autopilot_software}
-
-The autopilot software is a port of the Paparazzi airborne software to Linux. The airborne software is written in C and originally assumed a bare-metal (that is, no operating system) 
-
-
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{../images/software_comm_diagram.pdf}
 	\caption{Software communications diagram}	
 	\label{fig:software_comm_diagram}
 \end{figure}
 
+The autopilot software is a port of the Paparazzi airborne software to Linux. The airborne software is written in C and originally assumed a bare-metal (that is, no operating system) microcontroller environment with memory-mapped IO. The port mostly constituted inserting several layers between blocking Linux system calls and the control loop's expectation of non-blocking memory reads. The simplest way to do this was by splitting the autopilot process into separate threads for aircraft control and device access. We use mutexed shared memory to communicate between these threads, which works well because the aircraft control thread is a loop which only runs (therefore, only needs a lock) 60 times per second.
+
+The multithread approach helps ensure that the aircraft control thread will not be disrupted by busy waiting. It results in a simple structure of the whole program, and minimized the amount of code we had to change in the port. We care about minimizing changes to Paparazzi because the code is known to be well tested and reliable.
+
+The multithread approach works well for resources which are only needed by the autopilot process, but both the attitude and GPS information are needed by both the autopilot and imaging system processes. To remedy this, we use \texttt{gpsd} \cite{gpsd}, the standard Linux GPS service, to interface with the uBlox GPS device over a serial port. \texttt{Libgps}, a library for interfacing with \texttt{gpsd}, provides updates to client threads in both the autopilot and imaging processes. We handle the AHRS updates in the same way, except instead of the specialized \texttt{libgps} library we use the generic \texttt{mqueue} \cite{mqueue} service, a message passing facility provided by the Linux kernel. Each client thread opens a named queue, and the AHRS process delivers updated measurements to each queue.
+
+\subsection{Attitude and Heading Reference Sensor Software}
+
+The physical AHRS board sends 9 uncalibrated measurements to the flight computer, but the aircraft control loop is requires in attitude and heading expressed as 3 Euler angles \cite{euler_angles} and their derivatives with respect to time. It is straightforward to estimate Euler angle derivatives from rate gyro measurements, but estimating three degrees of angular orientation from six magnetometer and accelerometer measurements is a difficult nonlinear operation. Many algorithms exist 
+
 \subsection{Ground Station}
 
 \begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-20pt}
+	\centering
 	\includegraphics[width=0.37\textwidth]{../images/paparazzi_gcs.jpg}
 	\caption{Paparazzi GCS. Image Credit: Paparazzi Wiki \cite{paparazziweb }}
 	\label{fig:paparazzi_gcs}
+	\vspace{-60pt}
 \end{wrapfigure}
 Because we based our autopilot software on the Paparazzi project, we were able to make use of their excellent ground control software (GCS) with essentially no modifications. The Paparazzi GCS provides a map interface that allows the operator and competition judges to inspect the aircraft's position to ensure it is within the allowed airspace. It also provides attitude and altitude telemetry, and notification of lost radio contact, so the operator can alert the safety pilot to unsafe operation.
 
