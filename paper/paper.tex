@@ -226,16 +226,20 @@ We selected the Beagleboard \cite{beagleboard}, a single board computer made by 
 \subsubsection{Servo Subsystem}
 We are using Pololu Micro Maestro \cite{micromaestro}, which communicates with the flight computer over USB and features 6 Servo PWM outputs. On Linux, the Micro Maestro enumerates as a \texttt{ttyACM} device. A simple serial protocol is used to update the servo PWM outputs. The Micro Maestro also features a configurable timeout and failsafe position for the servo PWM outputs. We have configured the device to bring each servo to a predefined positon (throttle closed, elevator up, rudder right, ailerons left) after a 2 second new command timeout. This ensures that if the autopilot process or entire flight computer fails to respond for 2 seconds, the aircraft will enter this mode until the safety pilot takes control.
 
-The safety pilot is able to take control of the aircraft 
+A Futaba 2.4GHz ``FAAST'' 6-channel radio transmitter and receiver \cite{futaba24} is the safety radio for our entry. We've tested the radio in the presence of our other 2.4GHz radios (Wifi adapter, autopilot radio, and imaging system radio) at a variety of ranges and configurations, and are confident that any radio interference is not harmful to the response of the servo outputs.
+
+A Pololu 4 channel servo multiplexer \cite{pololumux} allows safety pilot is able to select whether the signals from the Futaba radio control receiver or the autopilot are in control of the servos. The four control channels (throttle, elevator, rudder, ailerons) are routed from both the Futaba receiver and Micro Maestro to the Master and Slave inputs, respectively, on the multiplexer. The multiplexer and servos are powered by the Futaba receiver, which has an independent power supply from the flight computer. As long as the Futaba receiver has power and signal from the radio control transmitter, the safety pilot will be able to take control of the aircraft.
+
+\subsubsection{Attitude and Heading Reference Sensor}
 
 \subsubsection{Other Components}
 \begin{itemize}
 	\setlength{\itemsep}{0cm}
 	\setlength{\parskip}{0cm}
 	\item GPS: We selected the GS407 \cite{gs407gps}, a uBlox LEA-5H \cite{ublox_lea5h} based GPS with an active helical antenna. We picked the unit because the uBlox chipset has been used successfully with Paparazzi in the past, and provides an internal Kalman filter mode for aircraft expecting accellerations of $\pm2g$. The GPS is powered and connected to the USB hub with a Sparkfun FTDI adapter \cite{sparkfun_ftdi}. 
-	\item Autopilot Radio:
-	\item Imaging Radio:
-	\item Wifi Adapter:
+	\item Autopilot Radio: We selected a Maxstream XBee Pro (Series 2.5) 2.4GHz 50mW \cite{xbeepro24} radio system for the autopilot telemetry and uplink radio. It operates at the relatively slow baud rate of 19200bps. We selected this system because it is known to work well with the Paparazzi system, and it can provide a seamless point-to-point UART pipe with two transcievers. Importantly, it deals well with interference from other 2.4GHz radio connections nearby, including other XBee Pro radios, the Futaba ``FAAST'' radio control signal, and 2.4GHz 802.11g Wifi.
+	\item Imaging Radio: We are using an identical pair of XBee Pro radios in a point-to-point 115200bps UART connection configuration to connect the imaging system to the ground. We have tested and found that, when operating two point-to-point connections at once, neither suffers measurably at up to 1/3 mile line of sight range. Therefore, rather than write complicated software to use both the autopilot serial communication protocol and the imaging radio serial communication protocol with the same XBee radio, we use two radio connections on the same band with little penalty. 
+	\item Wifi Adapter: We use a 802.11g (wifi) adapter for convenience in the lab and at the field to program the flight computer and supervise the execution of autopilot proceses. The reliability of our wifi connection drops off significantly beyond 600ft (200m), so we do not actively use the link during flight or for any telemetry.
 \end{itemize}
 \subsubsection{Power}
 Both the Beagleboard and the powered USB hub are provided with 5VDC via a switching regulator and a 3 cell (11.1v nominal) 1.5Ah Lithium Polymer battery. This provides, on average, 90 minutes of operation with all devices on.
